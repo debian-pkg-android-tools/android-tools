@@ -1,0 +1,11 @@
+android-tools (2.3.5-11.09) natty; urgency=low
+
+  * Package and updated for natty.
+
+ -- Tom Gall <tom.gall@linaro.org>  Mon, 26 Sep 2011 16:18:10 -0500
+
+android-tools (1.0.26-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Thu, 10 Feb 2011 14:03:37 +0100

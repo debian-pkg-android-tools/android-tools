@@ -1,0 +1,46 @@
+Description: Upstream changes introduced in version 1.0.26-1
+ This patch has been created by dpkg-source during the package build.
+ Here's the last changelog entry, hopefully it gives details on why
+ those changes were made:
+ .
+ android-tools (1.0.26-1) unstable; urgency=low
+ .
+   * Initial release
+ .
+ The person named in the Author field signed this changelog entry.
+Author: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- android-tools-2.3.5.orig/Makefile
++++ android-tools-2.3.5/Makefile
+@@ -1 +1,18 @@
++
++build:	adb fastboot
++
++adb:		out/host/linux-x86/bin/adb
++fastboot:	out/host/linux-x86/bin/fastboot
++
++distclean: clean
++test:
++
++install: install-man
++	install -d ${DESTDIR}/usr/bin
++	install -m 0755 out/host/linux-x86/bin/* ${DESTDIR}/usr/bin/
++
++install-man:
++	install -d ${DESTDIR}/usr/man/man1
++	install -m 0644 adb.1 ${DESTDIR}/usr/man/man1
++
+ include build/core/main.mk

@@ -1,0 +1,149 @@
+Description: Upstream changes introduced in version 2.3.5-11.09
+ This patch has been created by dpkg-source during the package build.
+ Here's the last changelog entry, hopefully it gives details on why
+ those changes were made:
+ .
+ android-tools (2.3.5-11.09) natty; urgency=low
+ .
+   * Package and updated for natty.
+ .
+ The person named in the Author field signed this changelog entry.
+Author: Tom Gall <tom.gall@linaro.org>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- /dev/null
++++ android-tools-2.3.5/adb.1
+@@ -0,0 +1,17 @@
++.TH ADB 1 "29 September 2011"
++.SH NAME
++adb \- android debug bridge
++.SH SYNOPSIS
++.B adb
++[
++.I options
++]
++.I command
++.LP
++.SH DESCRIPTION
++.LP
++.B adb
++
++For the full and up to date documentation visit
++http://developer.android.com/guide/developing/tools/adb.html
++
+--- android-tools-2.3.5.orig/build/target/product/sdk.mk
++++ android-tools-2.3.5/build/target/product/sdk.mk
+@@ -178,9 +178,9 @@ PRODUCT_LOCALES := \
+ 	zh_TW
+ 
+ # include available languages for TTS in the system image
+-include external/svox/pico/lang/PicoLangDeDeInSystem.mk
+-include external/svox/pico/lang/PicoLangEnGBInSystem.mk
+-include external/svox/pico/lang/PicoLangEnUsInSystem.mk
+-include external/svox/pico/lang/PicoLangEsEsInSystem.mk
+-include external/svox/pico/lang/PicoLangFrFrInSystem.mk
+-include external/svox/pico/lang/PicoLangItItInSystem.mk
++#include external/svox/pico/lang/PicoLangDeDeInSystem.mk
++#include external/svox/pico/lang/PicoLangEnGBInSystem.mk
++#include external/svox/pico/lang/PicoLangEnUsInSystem.mk
++#include external/svox/pico/lang/PicoLangEsEsInSystem.mk
++#include external/svox/pico/lang/PicoLangFrFrInSystem.mk
++#include external/svox/pico/lang/PicoLangItItInSystem.mk
+--- android-tools-2.3.5.orig/build/target/product/full.mk
++++ android-tools-2.3.5/build/target/product/full.mk
+@@ -39,16 +39,10 @@ PRODUCT_COPY_FILES := \
+     development/data/etc/apns-conf.xml:system/etc/apns-conf.xml \
+     development/data/etc/vold.conf:system/etc/vold.conf
+ 
+-# Pick up some sounds - stick with the short list to save space
+-# on smaller devices.
+-$(call inherit-product, frameworks/base/data/sounds/OriginalAudio.mk)
+-
+ # Get the TTS language packs
+-$(call inherit-product-if-exists, external/svox/pico/lang/all_pico_languages.mk)
+ 
+ # Get a list of languages. We use the small list to save space
+ # on smaller devices.
+-$(call inherit-product, build/target/product/languages_small.mk)
+ 
+ $(call inherit-product, build/target/product/generic.mk)
+ 
+--- android-tools-2.3.5.orig/build/core/main.mk
++++ android-tools-2.3.5/build/core/main.mk
+@@ -103,36 +103,36 @@ endif
+ 
+ 
+ # Check for the correct version of java
+-java_version := $(shell java -version 2>&1 | head -n 1 | grep '[ "]1\.6[\. "$$]')
+-ifeq ($(strip $(java_version)),)
+-$(info ************************************************************)
+-$(info You are attempting to build with the incorrect version)
+-$(info of java.)
+-$(info $(space))
+-$(info Your version is: $(shell java -version 2>&1 | head -n 1).)
+-$(info The correct version is: 1.6.)
+-$(info $(space))
+-$(info Please follow the machine setup instructions at)
+-$(info $(space)$(space)$(space)$(space)http://source.android.com/download)
+-$(info ************************************************************)
+-$(error stop)
+-endif
++#java_version := $(shell java -version 2>&1 | head -n 1 | grep '[ "]1\.6[\. "$$]')
++#ifeq ($(strip $(java_version)),)
++#$(info ************************************************************)
++#$(info You are attempting to build with the incorrect version)
++#$(info of java.)
++#$(info $(space))
++#$(info Your version is: $(shell java -version 2>&1 | head -n 1).)
++#$(info The correct version is: 1.6.)
++#$(info $(space))
++#$(info Please follow the machine setup instructions at)
++#$(info $(space)$(space)$(space)$(space)http://source.android.com/download)
++#$(info ************************************************************)
++#$(error stop)
++#endif
+ 
+ # Check for the correct version of javac
+-javac_version := $(shell javac -version 2>&1 | head -n 1 | grep '[ "]1\.6[\. "$$]')
+-ifeq ($(strip $(javac_version)),)
+-$(info ************************************************************)
+-$(info You are attempting to build with the incorrect version)
+-$(info of javac.)
+-$(info $(space))
+-$(info Your version is: $(shell javac -version 2>&1 | head -n 1).)
+-$(info The correct version is: 1.6.)
+-$(info $(space))
+-$(info Please follow the machine setup instructions at)
+-$(info $(space)$(space)$(space)$(space)http://source.android.com/download)
+-$(info ************************************************************)
+-$(error stop)
+-endif
++#javac_version := $(shell javac -version 2>&1 | head -n 1 | grep '[ "]1\.6[\. "$$]')
++#ifeq ($(strip $(javac_version)),)
++#$(info ************************************************************)
++#$(info You are attempting to build with the incorrect version)
++#$(info of javac.)
++#$(info $(space))
++#$(info Your version is: $(shell javac -version 2>&1 | head -n 1).)
++#$(info The correct version is: 1.6.)
++#$(info $(space))
++#$(info Please follow the machine setup instructions at)
++#$(info $(space)$(space)$(space)$(space)http://source.android.com/download)
++#$(info ************************************************************)
++#$(error stop)
++#endif
+ 
+ $(shell echo 'VERSIONS_CHECKED := $(VERSION_CHECK_SEQUENCE_NUMBER)' \
+         > $(OUT_DIR)/versions_checked.mk)

@@ -1,0 +1,4 @@
+# correct we must use the android version
+android-tools-fastboot: embedded-zlib 
+# WIP
+android-tools-fastboot: binary-without-manpage usr/bin/fastboot
