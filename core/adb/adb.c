@@ -131,6 +131,58 @@ void  adb_trace_init(void)
     }
 }
 
+#if !ADB_HOST
+/*
+ * Implements ADB tracing inside the emulator.
+ */
+
+#include <stdarg.h>
+
+/*
+ * Redefine open and write for qemu_pipe.h that contains inlined references
+ * to those routines. We will redifine them back after qemu_pipe.h inclusion.
+ */
+
+#undef open
+#undef write
+#define open    adb_open
+#define write   adb_write
+#include <hardware/qemu_pipe.h>
+#undef open
+#undef write
+#define open    ___xxx_open
+#define write   ___xxx_write
+
+/* A handle to adb-debug qemud service in the emulator. */
+int   adb_debug_qemu = -1;
+
+/* Initializes connection with the adb-debug qemud service in the emulator. */
+static int adb_qemu_trace_init(void)
+{
+    char con_name[32];
+
+    if (adb_debug_qemu >= 0) {
+        return 0;
+    }
+
+    /* adb debugging QEMUD service connection request. */
+    snprintf(con_name, sizeof(con_name), "qemud:adb-debug");
+    adb_debug_qemu = qemu_pipe_open(con_name);
+    return (adb_debug_qemu >= 0) ? 0 : -1;
+}
+
+void adb_qemu_trace(const char* fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    char msg[1024];
+
+    if (adb_debug_qemu >= 0) {
+        vsnprintf(msg, sizeof(msg), fmt, args);
+        adb_write(adb_debug_qemu, msg, strlen(msg));
+    }
+}
+#endif  /* !ADB_HOST */
 
 apacket *get_apacket(void)
 {
@@ -295,6 +347,13 @@ void parse_banner(char *banner, atransport *t)
     if(!strcmp(type, "recovery")) {
         D("setting connection_state to CS_RECOVERY\n");
         t->connection_state = CS_RECOVERY;
+        update_transports();
+        return;
+    }
+
+    if(!strcmp(type, "sideload")) {
+        D("setting connection_state to CS_SIDELOAD\n");
+        t->connection_state = CS_SIDELOAD;
         update_transports();
         return;
     }
@@ -835,12 +894,47 @@ void build_local_name(char* target_str, size_t target_size, int server_port)
   snprintf(target_str, target_size, "tcp:%d", server_port);
 }
 
+#if !ADB_HOST
+static int should_drop_privileges() {
+#ifndef ALLOW_ADBD_ROOT
+    return 1;
+#else /* ALLOW_ADBD_ROOT */
+    int secure = 0;
+    char value[PROPERTY_VALUE_MAX];
+
+   /* run adbd in secure mode if ro.secure is set and
+    ** we are not in the emulator
+    */
+    property_get("ro.kernel.qemu", value, "");
+    if (strcmp(value, "1") != 0) {
+        property_get("ro.secure", value, "1");
+        if (strcmp(value, "1") == 0) {
+            // don't run as root if ro.secure is set...
+            secure = 1;
+
+            // ... except we allow running as root in userdebug builds if the
+            // service.adb.root property has been set by the "adb root" command
+            property_get("ro.debuggable", value, "");
+            if (strcmp(value, "1") == 0) {
+                property_get("service.adb.root", value, "");
+                if (strcmp(value, "1") == 0) {
+                    secure = 0;
+                }
+            }
+        }
+    }
+    return secure;
+#endif /* ALLOW_ADBD_ROOT */
+}
+#endif /* !ADB_HOST */
+
 int adb_main(int is_daemon, int server_port)
 {
 #if !ADB_HOST
-    int secure = 0;
     int port;
     char value[PROPERTY_VALUE_MAX];
+
+    umask(000);
 #endif
 
     atexit(adb_cleanup);
@@ -866,31 +960,10 @@ int adb_main(int is_daemon, int server_port)
         exit(1);
     }
 #else
-    /* run adbd in secure mode if ro.secure is set and
-    ** we are not in the emulator
-    */
-    property_get("ro.kernel.qemu", value, "");
-    if (strcmp(value, "1") != 0) {
-        property_get("ro.secure", value, "1");
-        if (strcmp(value, "1") == 0) {
-            // don't run as root if ro.secure is set...
-            secure = 1;
-
-            // ... except we allow running as root in userdebug builds if the
-            // service.adb.root property has been set by the "adb root" command
-            property_get("ro.debuggable", value, "");
-            if (strcmp(value, "1") == 0) {
-                property_get("service.adb.root", value, "");
-                if (strcmp(value, "1") == 0) {
-                    secure = 0;
-                }
-            }
-        }
-    }
 
     /* don't listen on a port (default 5037) if running in secure mode */
     /* don't run as root if we are running in secure mode */
-    if (secure) {
+    if (should_drop_privileges()) {
         struct __user_cap_header_struct header;
         struct __user_cap_data_struct cap;
 
@@ -905,13 +978,14 @@ int adb_main(int is_daemon, int server_port)
         ** AID_INET to diagnose network issues (netcfg, ping)
         ** AID_GRAPHICS to access the frame buffer
         ** AID_NET_BT and AID_NET_BT_ADMIN to diagnose bluetooth (hcidump)
+        ** AID_SDCARD_R to allow reading from the SD card
         ** AID_SDCARD_RW to allow writing to the SD card
         ** AID_MOUNT to allow unmounting the SD card before rebooting
         ** AID_NET_BW_STATS to read out qtaguid statistics
         */
         gid_t groups[] = { AID_ADB, AID_LOG, AID_INPUT, AID_INET, AID_GRAPHICS,
-                           AID_NET_BT, AID_NET_BT_ADMIN, AID_SDCARD_RW, AID_MOUNT,
-                           AID_NET_BW_STATS };
+                           AID_NET_BT, AID_NET_BT_ADMIN, AID_SDCARD_R, AID_SDCARD_RW,
+                           AID_MOUNT, AID_NET_BW_STATS };
         if (setgroups(sizeof(groups)/sizeof(groups[0]), groups) != 0) {
             exit(1);
         }
@@ -1278,6 +1352,9 @@ int main(int argc, char **argv)
     D("Handling commandline()\n");
     return adb_commandline(argc - 1, argv + 1);
 #else
+    /* If adbd runs inside the emulator this will enable adb tracing via
+     * adb-debug qemud service in the emulator. */
+    adb_qemu_trace_init();
     if((argc > 1) && (!strcmp(argv[1],"recovery"))) {
         adb_device_banner = "recovery";
         recovery_mode = 1;

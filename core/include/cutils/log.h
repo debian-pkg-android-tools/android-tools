@@ -79,10 +79,6 @@ extern "C" {
 #else
 #define ALOGV(...) ((void)ALOG(LOG_VERBOSE, LOG_TAG, __VA_ARGS__))
 #endif
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGV
-#define LOGV ALOGV
-#endif
 #endif
 
 #define CONDITION(cond)     (__builtin_expect((cond)!=0, 0))
@@ -96,10 +92,6 @@ extern "C" {
     ? ((void)ALOG(LOG_VERBOSE, LOG_TAG, __VA_ARGS__)) \
     : (void)0 )
 #endif
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGV_IF
-#define LOGV_IF ALOGV_IF
-#endif
 #endif
 
 /*
@@ -107,10 +99,6 @@ extern "C" {
  */
 #ifndef ALOGD
 #define ALOGD(...) ((void)ALOG(LOG_DEBUG, LOG_TAG, __VA_ARGS__))
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGD
-#define LOGD ALOGD
-#endif
 #endif
 
 #ifndef ALOGD_IF
@@ -118,10 +106,6 @@ extern "C" {
     ( (CONDITION(cond)) \
     ? ((void)ALOG(LOG_DEBUG, LOG_TAG, __VA_ARGS__)) \
     : (void)0 )
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGD_IF
-#define LOGD_IF ALOGD_IF
-#endif
 #endif
 
 /*
@@ -129,10 +113,6 @@ extern "C" {
  */
 #ifndef ALOGI
 #define ALOGI(...) ((void)ALOG(LOG_INFO, LOG_TAG, __VA_ARGS__))
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGI
-#define LOGI ALOGI
-#endif
 #endif
 
 #ifndef ALOGI_IF
@@ -140,10 +120,6 @@ extern "C" {
     ( (CONDITION(cond)) \
     ? ((void)ALOG(LOG_INFO, LOG_TAG, __VA_ARGS__)) \
     : (void)0 )
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGI_IF
-#define LOGI_IF ALOGI_IF
-#endif
 #endif
 
 /*
@@ -151,10 +127,6 @@ extern "C" {
  */
 #ifndef ALOGW
 #define ALOGW(...) ((void)ALOG(LOG_WARN, LOG_TAG, __VA_ARGS__))
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGW
-#define LOGW ALOGW
-#endif
 #endif
 
 #ifndef ALOGW_IF
@@ -162,10 +134,6 @@ extern "C" {
     ( (CONDITION(cond)) \
     ? ((void)ALOG(LOG_WARN, LOG_TAG, __VA_ARGS__)) \
     : (void)0 )
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGW_IF
-#define LOGW_IF ALOGW_IF
-#endif
 #endif
 
 /*
@@ -173,10 +141,6 @@ extern "C" {
  */
 #ifndef ALOGE
 #define ALOGE(...) ((void)ALOG(LOG_ERROR, LOG_TAG, __VA_ARGS__))
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGE
-#define LOGE ALOGE
-#endif
 #endif
 
 #ifndef ALOGE_IF
@@ -184,10 +148,6 @@ extern "C" {
     ( (CONDITION(cond)) \
     ? ((void)ALOG(LOG_ERROR, LOG_TAG, __VA_ARGS__)) \
     : (void)0 )
-// Temporary measure for code still using old LOG macros.
-#ifndef LOGE_IF
-#define LOGE_IF ALOGE_IF
-#endif
 #endif
 
 // ---------------------------------------------------------------------
@@ -202,10 +162,6 @@ extern "C" {
 #else
 #define IF_ALOGV() IF_ALOG(LOG_VERBOSE, LOG_TAG)
 #endif
-// Temporary measure for code still using old LOG macros.
-#ifndef IF_LOGV
-#define IF_LOGV IF_ALOGV
-#endif
 #endif
 
 /*
@@ -214,10 +170,6 @@ extern "C" {
  */
 #ifndef IF_ALOGD
 #define IF_ALOGD() IF_ALOG(LOG_DEBUG, LOG_TAG)
-// Temporary measure for code still using old LOG macros.
-#ifndef IF_LOGD
-#define IF_LOGD IF_ALOGD
-#endif
 #endif
 
 /*
@@ -226,10 +178,6 @@ extern "C" {
  */
 #ifndef IF_ALOGI
 #define IF_ALOGI() IF_ALOG(LOG_INFO, LOG_TAG)
-// Temporary measure for code still using old LOG macros.
-#ifndef IF_LOGI
-#define IF_LOGI IF_ALOGI
-#endif
 #endif
 
 /*
@@ -238,10 +186,6 @@ extern "C" {
  */
 #ifndef IF_ALOGW
 #define IF_ALOGW() IF_ALOG(LOG_WARN, LOG_TAG)
-// Temporary measure for code still using old LOG macros.
-#ifndef IF_LOGW
-#define IF_LOGW IF_ALOGW
-#endif
 #endif
 
 /*
@@ -250,10 +194,6 @@ extern "C" {
  */
 #ifndef IF_ALOGE
 #define IF_ALOGE() IF_ALOG(LOG_ERROR, LOG_TAG)
-// Temporary measure for code still using old LOG macros.
-#ifndef IF_LOGE
-#define IF_LOGE IF_ALOGE
-#endif
 #endif
 
 
@@ -392,10 +332,6 @@ extern "C" {
 #ifndef ALOG_ASSERT
 #define ALOG_ASSERT(cond, ...) LOG_FATAL_IF(!(cond), ## __VA_ARGS__)
 //#define ALOG_ASSERT(cond) LOG_FATAL_IF(!(cond), "Assertion failed: " #cond)
-// Temporary measure for code still using old LOG macros.
-#ifndef LOG_ASSERT
-#define LOG_ASSERT ALOG_ASSERT
-#endif
 #endif
 
 // ---------------------------------------------------------------------
@@ -411,10 +347,6 @@ extern "C" {
 #ifndef ALOG
 #define ALOG(priority, tag, ...) \
     LOG_PRI(ANDROID_##priority, tag, __VA_ARGS__)
-// Temporary measure for code still using old LOG macros.
-#ifndef LOG
-#define LOG ALOG
-#endif
 #endif
 
 /*
@@ -439,10 +371,6 @@ extern "C" {
 #ifndef IF_ALOG
 #define IF_ALOG(priority, tag) \
     if (android_testLog(ANDROID_##priority, tag))
-// Temporary measure for code still using old LOG macros.
-#ifndef IF_LOG
-#define IF_LOG IF_ALOG
-#endif
 #endif
 
 // ---------------------------------------------------------------------

@@ -88,6 +88,8 @@ char *find_item(const char *item, const char *product)
         fn = "system.img";
     } else if(!strcmp(item,"userdata")) {
         fn = "userdata.img";
+    } else if(!strcmp(item,"cache")) {
+        fn = "cache.img";
     } else if(!strcmp(item,"info")) {
         fn = "android-info.txt";
     } else {
@@ -159,6 +161,7 @@ int match_fastboot(usb_ifc_info *info)
        (info->dev_vendor != 0x0955) &&  // Nvidia
        (info->dev_vendor != 0x413c) &&  // DELL
        (info->dev_vendor != 0x2314) &&  // INQ Mobile
+       (info->dev_vendor != 0x0b05) &&  // Asus
        (info->dev_vendor != 0x0bb4))    // HTC
             return -1;
     if(info->ifc_class != 0xff) return -1;
@@ -223,6 +226,7 @@ void usage(void)
             "  flashall                                 flash boot + recovery + system\n"
             "  flash <partition> [ <filename> ]         write a file to a flash partition\n"
             "  erase <partition>                        erase a flash partition\n"
+            "  format <partition>                       format a flash partition \n"
             "  getvar <variable>                        display a bootloader variable\n"
             "  boot <kernel> [ <ramdisk> ]              download and boot kernel\n"
             "  flash:raw boot <kernel> [ <ramdisk> ]    create bootimage and flash it\n"
@@ -634,6 +638,10 @@ int main(int argc, char **argv)
             require(2);
             fb_queue_erase(argv[1]);
             skip(2);
+        } else if(!strcmp(*argv, "format")) {
+            require(2);
+            fb_queue_format(argv[1], 0);
+            skip(2);
         } else if(!strcmp(*argv, "signature")) {
             require(2);
             data = load_file(argv[1], &sz);
@@ -719,7 +727,9 @@ int main(int argc, char **argv)
 
     if (wants_wipe) {
         fb_queue_erase("userdata");
+        fb_queue_format("userdata", 1);
         fb_queue_erase("cache");
+        fb_queue_format("cache", 1);
     }
     if (wants_reboot) {
         fb_queue_reboot();
