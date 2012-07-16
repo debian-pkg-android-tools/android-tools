@@ -2,7 +2,8 @@ Source: android-tools
 Section: devel
 Priority: extra
 Maintainer: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Build-Depends: debhelper (>= 7.0.50~), libc6-dev-i386, bison,linux-libc-dev, gcc-multilib, lib32stdc++6, g++-multilib
+Build-Depends: debhelper (>= 7.0.50~), libc6-dev-i386 [amd64], libc6-dev [i386],
+ bison, linux-libc-dev, gcc-multilib, lib32stdc++6 [amd64], libstdc++6 [i386], g++-multilib
 Standards-Version: 3.9.1
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 
