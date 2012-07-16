@@ -3,6 +3,7 @@ android-tools for Debian
 
 To update package you need to clone core/ of Android source code:
 
-git clone https://android.googlesource.com/platform/system/core.git
+git clone https://android.googlesource.com/platform/system/core
+git clone https://android.googlesource.com/platform/system/extras
 
 Then update directiories present in this source package with newer code.

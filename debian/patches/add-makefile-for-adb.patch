@@ -2,11 +2,11 @@ Subject: Add makefile to build adb without using Android build system
 Origin: https://heiher.info/2227.html
 
 ---
- core/adb/makefile |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ core/adb/makefile |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
 --- /dev/null
-+++ android-tools-4.0.4/core/adb/makefile
++++ android-tools-4.1.1/core/adb/makefile
 @@ -0,0 +1,52 @@
 +# Makefile for adb
 +
@@ -34,17 +34,17 @@ Origin: https://heiher.info/2227.html
 +SRCS+= socket_loopback_client.c
 +SRCS+= socket_loopback_server.c
 +SRCS+= socket_network_client.c
++SRCS+= load_file.c
 +
 +VPATH+= ../libzipfile
 +SRCS+= centraldir.c
 +SRCS+= zipfile.c
 +
++
 +CPPFLAGS+= -DADB_HOST=1
 +CPPFLAGS+= -DHAVE_FORKEXEC=1
 +CPPFLAGS+= -DHAVE_SYMLINKS
 +CPPFLAGS+= -DHAVE_TERMIO_H
-+CPPFLAGS+= -D_GNU_SOURCE
-+CPPFLAGS+= -D_XOPEN_SOURCE
 +CPPFLAGS+= -I.
 +CPPFLAGS+= -I../include
 +CPPFLAGS+= -I../../../external/zlib

@@ -1,3 +1,14 @@
+android-tools (4.1.1+git20120713-0ubuntu1) quantal; urgency=low
+
+  * New upstream release.
+    core:   2177c79bddc66e295599d87007d4cbec549e1cac
+    extras: d2b6666effb387c9052cd63378c6d5ddd1c0d1c7
+  * Removed -D_GNU_SOURCE -D_XOPEN_SOURCE from adb's makefile.
+  * Added extras/ext4_utils directory from platform/system/extras git (for
+  	fastboot)
+
+ -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Fri, 13 Jul 2012 15:59:49 +0200
+
 android-tools (4.0.4-20120618-1~linaro1) precise; urgency=low
 
   * New upstream release.

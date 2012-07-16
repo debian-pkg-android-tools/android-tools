@@ -1,7 +1,8 @@
 Source: android-tools
 Section: devel
 Priority: extra
-Maintainer: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 Build-Depends: debhelper (>= 9), zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
