@@ -120,10 +120,12 @@ void help()
         "                                   dev:<character device name>\n"
         "                                   jdwp:<process pid> (remote only)\n"
         "  adb jdwp                     - list PIDs of processes hosting a JDWP transport\n"
-        "  adb install [-l] [-r] [-s] <file> - push this package file to the device and install it\n"
+        "  adb install [-l] [-r] [-s] [--algo <algorithm name> --key <hex-encoded key> --iv <hex-encoded iv>] <file>\n"
+        "                               - push this package file to the device and install it\n"
         "                                 ('-l' means forward-lock the app)\n"
         "                                 ('-r' means reinstall the app, keeping its data)\n"
         "                                 ('-s' means install on SD card instead of internal storage)\n"
+        "                                 ('--algo', '--key', and '--iv' mean the file is encrypted already)\n"
         "  adb uninstall [-k] <package> - remove this app package from the device\n"
         "                                 ('-k' means keep the data and cache directories)\n"
         "  adb bugreport                - return all information from the device\n"
@@ -367,6 +369,83 @@ static void format_host_command(char* buffer, size_t  buflen, const char* comman
     }
 }
 
+int adb_download_buffer(const char *service, const void* data, int sz,
+                        unsigned progress)
+{
+    char buf[4096];
+    unsigned total;
+    int fd;
+    const unsigned char *ptr;
+
+    sprintf(buf,"%s:%d", service, sz);
+    fd = adb_connect(buf);
+    if(fd < 0) {
+        fprintf(stderr,"error: %s\n", adb_error());
+        return -1;
+    }
+
+    int opt = CHUNK_SIZE;
+    opt = setsockopt(fd, SOL_SOCKET, SO_SNDBUF, &opt, sizeof(opt));
+
+    total = sz;
+    ptr = data;
+
+    if(progress) {
+        char *x = strrchr(service, ':');
+        if(x) service = x + 1;
+    }
+
+    while(sz > 0) {
+        unsigned xfer = (sz > CHUNK_SIZE) ? CHUNK_SIZE : sz;
+        if(writex(fd, ptr, xfer)) {
+            adb_status(fd);
+            fprintf(stderr,"* failed to write data '%s' *\n", adb_error());
+            return -1;
+        }
+        sz -= xfer;
+        ptr += xfer;
+        if(progress) {
+            printf("sending: '%s' %4d%%    \r", service, (int)(100LL - ((100LL * sz) / (total))));
+            fflush(stdout);
+        }
+    }
+    if(progress) {
+        printf("\n");
+    }
+
+    if(readx(fd, buf, 4)){
+        fprintf(stderr,"* error reading response *\n");
+        adb_close(fd);
+        return -1;
+    }
+    if(memcmp(buf, "OKAY", 4)) {
+        buf[4] = 0;
+        fprintf(stderr,"* error response '%s' *\n", buf);
+        adb_close(fd);
+        return -1;
+    }
+
+    adb_close(fd);
+    return 0;
+}
+
+
+int adb_download(const char *service, const char *fn, unsigned progress)
+{
+    void *data;
+    unsigned sz;
+
+    data = load_file(fn, &sz);
+    if(data == 0) {
+        fprintf(stderr,"* cannot read '%s' *\n", service);
+        return -1;
+    }
+
+    int status = adb_download_buffer(service, data, sz, progress);
+    free(data);
+    return status;
+}
+
 static void status_window(transport_type ttype, const char* serial)
 {
     char command[4096];
@@ -561,6 +640,10 @@ static int logcat(transport_type transport, char* serial, int argc, char **argv)
 
     free(quoted_log_tags);
 
+    if (!strcmp(argv[0],"longcat")) {
+        strncat(buf, " -v long", sizeof(buf)-1);
+    }
+
     argc -= 1;
     argv += 1;
     while(argc-- > 0) {
@@ -644,6 +727,7 @@ static int backup(int argc, char** argv) {
         return -1;
     }
 
+    printf("Now unlock your device and confirm the backup operation.\n");
     copy_to_file(fd, outFd);
 
     adb_close(fd);
@@ -671,6 +755,7 @@ static int restore(int argc, char** argv) {
         return -1;
     }
 
+    printf("Now unlock your device and confirm the restore operation.\n");
     copy_to_file(tarFd, fd);
 
     adb_close(fd);
@@ -1057,6 +1142,15 @@ top:
         return 0;
     }
 
+    if(!strcmp(argv[0], "sideload")) {
+        if(argc != 2) return usage();
+        if(adb_download("sideload", argv[1], 1)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     if(!strcmp(argv[0], "remount") || !strcmp(argv[0], "reboot")
             || !strcmp(argv[0], "reboot-bootloader")
             || !strcmp(argv[0], "tcpip") || !strcmp(argv[0], "usb")
@@ -1225,7 +1319,7 @@ top:
         return 0;
     }
 
-    if(!strcmp(argv[0],"logcat") || !strcmp(argv[0],"lolcat")) {
+    if(!strcmp(argv[0],"logcat") || !strcmp(argv[0],"lolcat") || !strcmp(argv[0],"longcat")) {
         return logcat(ttype, serial, argc, argv);
     }
 
@@ -1440,6 +1534,7 @@ int install_app(transport_type transport, char* serial, int argc, char** argv)
     int file_arg = -1;
     int err;
     int i;
+    int verify_apk = 1;
 
     for (i = 1; i < argc; i++) {
         if (*argv[i] != '-') {
@@ -1450,6 +1545,15 @@ int install_app(transport_type transport, char* serial, int argc, char** argv)
             i++;
         } else if (!strcmp(argv[i], "-s")) {
             where = SD_DEST;
+        } else if (!strcmp(argv[i], "--algo")) {
+            verify_apk = 0;
+            i++;
+        } else if (!strcmp(argv[i], "--iv")) {
+            verify_apk = 0;
+            i++;
+        } else if (!strcmp(argv[i], "--key")) {
+            verify_apk = 0;
+            i++;
         }
     }
 
@@ -1481,9 +1585,9 @@ int install_app(transport_type transport, char* serial, int argc, char** argv)
         }
     }
 
-    err = do_sync_push(apk_file, apk_dest, 1 /* verify APK */);
+    err = do_sync_push(apk_file, apk_dest, verify_apk);
     if (err) {
-        return err;
+        goto cleanup_apk;
     } else {
         argv[file_arg] = apk_dest; /* destination name, not source location */
     }
@@ -1499,11 +1603,11 @@ int install_app(transport_type transport, char* serial, int argc, char** argv)
 
     pm_command(transport, serial, argc, argv);
 
+cleanup_apk:
     if (verification_file != NULL) {
         delete_file(transport, serial, verification_dest);
     }
 
-cleanup_apk:
     delete_file(transport, serial, apk_dest);
 
     return err;

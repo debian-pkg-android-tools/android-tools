@@ -109,7 +109,7 @@
 /*
  * Define this if we have localtime_r().
  */
-#define HAVE_LOCALTIME_R
+#define HAVE_LOCALTIME_R 1
 
 /*
  * Define this if we have gethostbyname_r().
@@ -322,5 +322,15 @@
  * Define if pread() exists
  */
 #define HAVE_PREAD 1
+
+/*
+ * Define to 1 if <stdlib.h> provides qsort_r() with a BSD style function prototype.
+ */
+#define HAVE_BSD_QSORT_R 0
+
+/*
+ * Define to 1 if <stdlib.h> provides qsort_r() with a GNU style function prototype.
+ */
+#define HAVE_GNU_QSORT_R 1
 
 #endif /*_ANDROID_CONFIG_H*/

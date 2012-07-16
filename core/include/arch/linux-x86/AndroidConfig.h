@@ -109,7 +109,7 @@
 /*
  * Define this if we have localtime_r().
  */
-#define HAVE_LOCALTIME_R
+#define HAVE_LOCALTIME_R 1
 
 /*
  * Define this if we have gethostbyname_r().
@@ -332,5 +332,19 @@
  * Define if printf() supports %zd for size_t arguments
  */
 #define HAVE_PRINTF_ZD 1
+
+/*
+ * Define to 1 if <stdlib.h> provides qsort_r() with a BSD style function prototype.
+ */
+#define HAVE_BSD_QSORT_R 0
+
+/*
+ * Define to 1 if <stdlib.h> provides qsort_r() with a GNU style function prototype.
+ */
+#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 8)
+#define HAVE_GNU_QSORT_R 1
+#else
+#define HAVE_GNU_QSORT_R 0
+#endif
 
 #endif /*_ANDROID_CONFIG_H*/
