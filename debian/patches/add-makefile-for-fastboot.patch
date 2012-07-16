@@ -1,0 +1,36 @@
+Subject: Add makefile to build fastboot without using Android build system
+Origin: https://heiher.info/2227.html
+
+---
+ core/fastboot/makefile |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+--- /dev/null
++++ android-tools-4.0.4/core/fastboot/makefile
+@@ -0,0 +1,26 @@
++SRCS+= bootimg.c
++SRCS+= engine.c
++SRCS+= fastboot.c
++SRCS+= protocol.c
++SRCS+= usb_linux.c
++SRCS+= util_linux.c
++
++VPATH+= ../libzipfile
++SRCS+= centraldir.c
++SRCS+= zipfile.c
++
++CPPFLAGS+= -I.
++CPPFLAGS+= -I../include
++CPPFLAGS+= -I../mkbootimg
++
++LIBS+= -lz
++
++OBJS= $(SRCS:.c=.o)
++
++all: fastboot
++
++fastboot: $(OBJS)
++	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
++
++clean:
++	rm -rf $(OBJS) fastboot

@@ -1,3 +1,24 @@
+android-tools (4.0.4-20120618-1~linaro1) precise; urgency=low
+
+  * New upstream release.
+  * New way of building adb/fastboot: instead of re-using Android build system
+  	I used makefile from
+  	http://blog.alexworld.it/post/9707276488/how-to-build-android-adb-on-arm
+  	and wrote similar version for fastboot. No embedded zlib anymore.
+  * Added README.source with information how to update package.
+  * Added cross compilation support.
+  * Added hardening support.
+  * Added small descriptions to patches.
+
+ -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Mon, 18 Jun 2012 09:42:57 +0200
+
+android-tools (2.3.5-11.09.2) precise; urgency=low
+
+  * Added Archos USB Vendor ID to list of supported vendors
+  * Cleaned patches
+
+ -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Mon, 06 Feb 2012 18:11:32 -0800
+
 android-tools (2.3.5-11.09.1) oneiric; urgency=low
 
   * Fixed build dependencies to get it buildable on i386.

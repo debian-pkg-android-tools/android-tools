@@ -2,26 +2,25 @@ Source: android-tools
 Section: devel
 Priority: extra
 Maintainer: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Build-Depends: debhelper (>= 7.0.50~), libc6-dev-i386 [amd64], libc6-dev [i386],
- bison, linux-libc-dev, gcc-multilib, lib32stdc++6 [amd64], libstdc++6 [i386], g++-multilib
-Standards-Version: 3.9.1
+Build-Depends: debhelper (>= 9), zlib1g-dev
+Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 
 Package: android-tools-adb
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Android Debug Bridge
+Description: Android Debug Bridge CLI tool
  Android Debug Bridge (adb) is a versatile tool lets you manage the state of an
  emulator instance or Android-powered device. It is a client-server program
  that includes three components:
  .
- A client, which runs on your development machine. You can invoke a client
- from a shell by issuing an adb command. Other Android tools such as the ADT
- plugin and DDMS also create adb clients.  
+ A client, which runs on your development machine. You can invoke a client from
+ a shell by issuing an adb command. Other Android tools such as the ADT plugin
+ and DDMS also create adb clients.  
  .
- A server, which runs as a background process on your development machine.
- The server manages communication between the client and the adb daemon
- running on an emulator or device.  
+ A server, which runs as a background process on your development machine.  The
+ server manages communication between the client and the adb daemon running on
+ an emulator or device.  
  .
  A daemon, which runs as a background process on each emulator or device
  instance.
@@ -29,7 +28,6 @@ Description: Android Debug Bridge
 Package: android-tools-fastboot
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Android Debug Bridge
- Fastboot is protocol used to update the flash filesystem in Android 
- devices from a host over USB. It allows flashing of unsigned partition i
- images.
+Description: Fastboot protocol CLI tool
+ Fastboot is protocol used to update the flash filesystem in Android devices
+ from a host over USB. It allows flashing of unsigned partition images.
