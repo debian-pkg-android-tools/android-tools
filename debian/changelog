@@ -1,3 +1,9 @@
+android-tools (4.1.1+git20120713-1) unstable; urgency=low
+
+  * First upload into Debian.
+
+ -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Wed, 18 Jul 2012 11:06:04 +0200
+
 android-tools (4.1.1+git20120713-0ubuntu1) quantal; urgency=low
 
   * New upstream release.
