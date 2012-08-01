@@ -6,4 +6,20 @@ To update package you need to clone core/ of Android source code:
 git clone https://android.googlesource.com/platform/system/core
 git clone https://android.googlesource.com/platform/system/extras
 
-Then update directiories present in this source package with newer code.
+Then update directories present in this source package with newer code.
+
+Following directories and files were dropped:
+
+core/fastboot/engineering_key.p12
+core/include/android
+core/include/corkscrew
+core/include/ctest
+core/include/diskconfig
+core/include/ion
+core/include/mincrypt
+core/include/netutils
+core/include/pixelflinger
+core/include/private
+core/include/sync
+core/include/system
+core/include/usbhost
