@@ -11,6 +11,7 @@ Then update directories present in this source package with newer code.
 Following directories and files were dropped:
 
 core/fastboot/engineering_key.p12
+core/fastboot/*.sh
 core/include/android
 core/include/corkscrew
 core/include/ctest
