@@ -1,5 +1,8 @@
-android-tools (4.1.1+git20120713-0ubuntu2) quantal; urgency=low
+android-tools (4.1.1+git20120801-0ubuntu1) quantal; urgency=low
 
+  * Updated upstream code:
+    core:   23ee469c4b790634959e5ccf83134f44e73fb72b
+    extras: 983ce5738cee0bf78b87d6274fe1387129768302
   * Fixed debian/copyright to be DEP-5 compatible.
   * Added license information for all files.
   * Dropped not needed include files.
