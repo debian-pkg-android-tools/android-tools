@@ -1,8 +1,11 @@
-android-tools (4.1.1+git20120713-1) unstable; urgency=low
+android-tools (4.1.1+git20120713-0ubuntu2) quantal; urgency=low
 
-  * First upload into Debian.
+  * Fixed debian/copyright to be DEP-5 compatible.
+  * Added license information for all files.
+  * Dropped not needed include files.
+  * Dropped core/fastboot/enfineering_key.p12 file.
 
- -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Wed, 18 Jul 2012 11:06:04 +0200
+ -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Wed, 01 Aug 2012 11:19:27 +0200
 
 android-tools (4.1.1+git20120713-0ubuntu1) quantal; urgency=low
 
