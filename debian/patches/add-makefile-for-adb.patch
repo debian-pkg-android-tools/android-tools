@@ -6,7 +6,7 @@ Origin: https://heiher.info/2227.html
  1 file changed, 52 insertions(+)
 
 --- /dev/null
-+++ android-tools-4.1.1/core/adb/makefile
++++ android-tools/core/adb/makefile
 @@ -0,0 +1,52 @@
 +# Makefile for adb
 +

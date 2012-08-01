@@ -2,12 +2,12 @@ Subject: Add makefile to build fastboot without using Android build system
 Origin: https://heiher.info/2227.html
 
 ---
- core/fastboot/makefile |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ core/fastboot/makefile |   47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
 --- /dev/null
-+++ android-tools-4.1.1/core/fastboot/makefile
-@@ -0,0 +1,41 @@
++++ android-tools/core/fastboot/makefile
+@@ -0,0 +1,47 @@
 +SRCS+= bootimg.c
 +SRCS+= engine.c
 +SRCS+= fastboot.c
@@ -19,17 +19,22 @@ Origin: https://heiher.info/2227.html
 +SRCS+= centraldir.c
 +SRCS+= zipfile.c
 +
++VPATH+= ../libsparse
++SRCS+= backed_block.c
++SRCS+= sparse_crc32.c
++SRCS+= sparse.c
++SRCS+= sparse_read.c
++SRCS+= sparse_err.c
++SRCS+= output_file.c
++
 +VPATH+= ../../extras/ext4_utils/
 +SRCS+= make_ext4fs.c
-+SRCS+= backed_block.c
 +SRCS+= ext4_utils.c
 +SRCS+= indirect.c
 +SRCS+= allocate.c
 +SRCS+= contents.c
-+SRCS+= output_file.c
 +SRCS+= uuid.c
 +SRCS+= extent.c
-+SRCS+= sparse_crc32.c
 +SRCS+= wipe.c
 +SRCS+= sha1.c
 +
@@ -37,6 +42,7 @@ Origin: https://heiher.info/2227.html
 +CPPFLAGS+= -I../include
 +CPPFLAGS+= -I../mkbootimg
 +CPPFLAGS+= -I../../extras/ext4_utils/
++CPPFLAGS+= -I../libsparse/include/
 +
 +LIBS+= -lz
 +
