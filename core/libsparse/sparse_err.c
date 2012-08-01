@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,5 +14,20 @@
  * limitations under the License.
  */
 
-u32 sparse_crc32(u32 crc, const void *buf, size_t size);
+#include <sparse/sparse.h>
 
+#include <stdarg.h>
+#include <stdio.h>
+#include <unistd.h>
+
+void sparse_default_print(const char *fmt, ...)
+{
+	va_list argp;
+
+	va_start(argp, fmt);
+	vfprintf(stderr, fmt, argp);
+	va_end(argp);
+}
+
+void (*sparse_print_error)(const char *fmt, ...) = sparse_default_print;
+void (*sparse_print_verbose)(const char *fmt, ...) = sparse_default_print;
