@@ -106,7 +106,7 @@ License: public domain
  By Steve Reid <steve@edmweb.com>
  100% Public Domain
 
-Files: extras/ext4_utils/sparse_crc32.c
+Files: core/libsparse/sparse_crc32.c
 Copyright: none
 License: public domain
  COPYRIGHT (C) 1986 Gary S. Brown.  You may use this program, or
