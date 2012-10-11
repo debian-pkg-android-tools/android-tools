@@ -20,10 +20,12 @@ override_dh_clean:
 	dh_clean
 	cd core/adb && make clean
 	cd core/fastboot && make clean
+	cd core/libsparse && make clean
 
 override_dh_auto_build:
 	cd core/adb && make CC=$(CC)
 	cd core/fastboot && make CC=$(CC)
+	cd core/libsparse && make CC=$(CC)
 
 override_dh_install:
 	dh_install --sourcedir=.
