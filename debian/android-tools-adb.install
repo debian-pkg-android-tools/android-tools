@@ -1,2 +1,1 @@
-usr/bin/adb
-usr/man/*
+core/adb/adb usr/bin/

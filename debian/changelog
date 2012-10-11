@@ -1,3 +1,11 @@
+android-tools (4.1.1+git20120801-1) unstable; urgency=low
+
+  * Initial upload to Debian (closes: #685178), based on the work of Marcin
+    Juszkiewicz.
+  * Make the package amd64 and i386 only. ARM needs testing.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.hu>  Tue, 14 Aug 2012 12:24:28 +0000
+
 android-tools (4.1.1+git20120801-0ubuntu1) quantal; urgency=low
 
   * Updated upstream code:

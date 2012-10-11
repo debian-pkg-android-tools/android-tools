@@ -1,14 +1,14 @@
 Source: android-tools
 Section: devel
 Priority: extra
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-XSBC-Original-Maintainer: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
+Uploaders: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 Build-Depends: debhelper (>= 9), zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 
 Package: android-tools-adb
-Architecture: any
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android Debug Bridge CLI tool
  Android Debug Bridge (adb) is a versatile tool lets you manage the state of an
@@ -27,7 +27,7 @@ Description: Android Debug Bridge CLI tool
  instance.
 
 Package: android-tools-fastboot
-Architecture: any
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Fastboot protocol CLI tool
  Fastboot is protocol used to update the flash filesystem in Android devices

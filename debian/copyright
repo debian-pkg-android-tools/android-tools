@@ -20,6 +20,7 @@ License: Apache 2.0
 
 Files: debian/*
 Copyright: 2012, Linaro Ltd.
+           2012, Laszlo Boszormenyi (GCS) <gcs@debian.hu>
 License: GPL v2
  This program is free software; you can redistribute it
  and/or modify it under the terms of the GNU General Public
