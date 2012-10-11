@@ -59,4 +59,4 @@ Origin: https://heiher.info/2227.html
 +	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
 +
 +clean:
-+	rm -rf $(OBJS)
++	rm -rf $(OBJS) adb

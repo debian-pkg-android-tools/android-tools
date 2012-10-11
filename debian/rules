@@ -18,7 +18,8 @@ endif
 
 override_dh_clean:
 	dh_clean
-	rm -f core/adb/*.o core/adb/adb core/fastboot/*.o core/fastboot/fastboot
+	cd core/adb && make clean
+	cd core/fastboot && make clean
 
 override_dh_auto_build:
 	cd core/adb && make CC=$(CC)
