@@ -1,1 +1,2 @@
+core/adb/adb usr/bin/
 core/fastboot/fastboot usr/bin/
