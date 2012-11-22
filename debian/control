@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9), zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 
-Package: android-tools
+Package: android-tools-adb
 Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android Debug Bridge CLI tool
