@@ -1,3 +1,2 @@
-add-makefile-for-adb.patch
 add-makefile-for-fastboot.patch
-add-makefile-for-simg2img.patch
+add-makefile-for-adb.patch

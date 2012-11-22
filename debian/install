@@ -1,5 +1,2 @@
 core/adb/adb usr/bin/
 core/fastboot/fastboot usr/bin/
-core/libsparse/img2simg usr/bin
-core/libsparse/simg2img usr/bin
-core/libsparse/simg2simg usr/bin
