@@ -1,14 +1,15 @@
 Source: android-tools
 Section: devel
 Priority: extra
-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
 Uploaders: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Build-Depends: debhelper (>= 9), zlib1g-dev
+Build-Depends: debhelper (>= 9), zlib1g-dev, python
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 
 Package: android-tools-adb
-Architecture: amd64 i386
+Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Android Debug Bridge CLI tool
  Android Debug Bridge (adb) is a versatile tool lets you manage the state of an
@@ -27,8 +28,15 @@ Description: Android Debug Bridge CLI tool
  instance.
 
 Package: android-tools-fastboot
-Architecture: amd64 i386
+Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Fastboot protocol CLI tool
  Fastboot is protocol used to update the flash filesystem in Android devices
  from a host over USB. It allows flashing of unsigned partition images.
+
+Package: android-tools-fsutils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
+Description: Android ext4_utils with sparse support
+ Utilities needed to generate sparse ext4 images that can be used for
+ flashing android devices.

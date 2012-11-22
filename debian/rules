@@ -14,16 +14,20 @@ ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
 endif
 
 %:
-	dh $@
+	dh $@ --with python2
 
 override_dh_clean:
 	dh_clean
-	cd core/adb && make clean
-	cd core/fastboot && make clean
+	make -C core/adb CC=$(CC) clean
+	make -C core/fastboot CC=$(CC) clean
+	make -C extras/ext4_utils CC=$(CC) clean
 
 override_dh_auto_build:
-	cd core/adb && make CC=$(CC)
-	cd core/fastboot && make CC=$(CC)
+	make -C core/adb CC=$(CC)
+	make -C core/fastboot CC=$(CC)
+	make -C extras/ext4_utils CC=$(CC)
 
 override_dh_install:
 	dh_install --sourcedir=.
+	install core/libsparse/simg_dump.py debian/android-tools-fsutils/usr/bin/simg_dump
+	install extras/ext4_utils/mkuserimg.sh debian/android-tools-fsutils/usr/bin/mkuserimg

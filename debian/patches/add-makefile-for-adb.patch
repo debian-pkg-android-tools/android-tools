@@ -5,8 +5,10 @@ Origin: https://heiher.info/2227.html
  core/adb/makefile |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 52 insertions(+)
 
+Index: b/core/adb/makefile
+===================================================================
 --- /dev/null
-+++ android-tools/core/adb/makefile
++++ b/core/adb/makefile
 @@ -0,0 +1,52 @@
 +# Makefile for adb
 +

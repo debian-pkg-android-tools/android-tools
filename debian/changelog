@@ -1,3 +1,11 @@
+android-tools (4.1.1+git20120801-1ubuntu1) raring; urgency=low
+
+  * Build extras/ext4_utils as well.
+  * Build for any architecture. (Closes: 690455)
+  * Add android-tools-ext4-utils package.
+
+ -- Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>  Mon, 05 Nov 2012 17:54:05 +0000
+
 android-tools (4.1.1+git20120801-1) unstable; urgency=low
 
   * Initial upload to Debian (closes: #685178), based on the work of Marcin
