@@ -1,0 +1,7 @@
+# Udev rules for letting the console user access the Nexus 7
+# device node, needed for fastboot flashing.
+
+ACTION=="add|change", SUBSYSTEM=="usb", \
+  ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="4e40|d001", \
+  TEST=="/var/run/ConsoleKit/database", \
+  RUN+="udev-acl --action=$env{ACTION} --device=$env{DEVNAME}"

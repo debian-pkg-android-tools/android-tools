@@ -1,3 +1,9 @@
+android-tools (4.1.1+git20120801-1ubuntu2) raring; urgency=low
+
+  * Add udev rules to allow fastboot flashing Nexus7.
+
+ -- Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>  Mon, 14 Jan 2013 13:52:12 +0000
+
 android-tools (4.1.1+git20120801-1ubuntu1) raring; urgency=low
 
   * Build extras/ext4_utils as well.

@@ -31,3 +31,6 @@ override_dh_install:
 	dh_install --sourcedir=.
 	install core/libsparse/simg_dump.py debian/android-tools-fsutils/usr/bin/simg_dump
 	install extras/ext4_utils/mkuserimg.sh debian/android-tools-fsutils/usr/bin/mkuserimg
+
+override_dh_installudev:
+	dh_installudev --priority=70
