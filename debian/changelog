@@ -1,3 +1,46 @@
+android-tools (4.2.2+git20130218-1) unstable; urgency=low
+
+  * Add myself to Uploaders with Marcin's permission; also sponsor NEW
+    android-tools-fsutils binary package.
+  * Improve long descriptions a bit.
+
+ -- Loïc Minier <lool@debian.org>  Mon, 18 Feb 2013 16:33:46 +0100
+
+android-tools (4.2.2+git20130218-0ubuntu2) raring; urgency=low
+
+  * Update README.source to mention debian/create-snapshot.
+  * Move added makefiles to debian/makefiles instead of painfully maintaining
+    these as patches.
+  * Add some metadata to debian/create-snapshot.
+  * Use $(MAKE) and $(INSTALL_PROGRAM) instead of plain "make" and "install"
+    in rules.
+  * Drop useless DH_OPTIONS export.
+  * Set CC to gcc by default instead of using "cc"; this is more consistent
+    with the cross-compiling case.
+  * export CC instead of passing it in all make calls.
+  * Add header with author and description to Android selinux patch.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Mon, 18 Feb 2013 15:56:29 +0100
+
+android-tools (4.2.2+git20130218-0ubuntu1) raring; urgency=low
+
+  [ Sergio Schvezov ]
+  * Updated upstream code:
+    core: 523a20901b2afce7ad02c0011d70ed57f8bbb997
+    extras: 261e0f9c260cd708e6b7e6f98a35ee9d31ebc01c
+  * Added new dependencies to debian/control
+  * Add new patch to drop Android selinux include.
+
+  [ Loïc Minier ]
+  * Add new debian/create-snapshot script to take a snapshot of the latest
+    sources; maintains a list of files to keep instead of the list of files to
+    remove in debian/README.source.
+  * Fix hand-modified patches to have proper hunk headings.
+  * Fix ext4_utils build: update ext4_utils makefile to link with selinux, and
+    update Android selinux patch to drop include in ext4_utils code as well.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Mon, 18 Feb 2013 13:40:22 +0100
+
 android-tools (4.1.1+git20120801-1ubuntu2) raring; urgency=low
 
   * Add udev rules to allow fastboot flashing Nexus7.

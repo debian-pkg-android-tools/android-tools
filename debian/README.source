@@ -1,26 +1,12 @@
 android-tools for Debian
 ------------------------
 
-To update package you need to clone core/ of Android source code:
+The upstream tarball is based of these upstream Android git repos:
+    git clone https://android.googlesource.com/platform/system/core
+    git clone https://android.googlesource.com/platform/system/extras
 
-git clone https://android.googlesource.com/platform/system/core
-git clone https://android.googlesource.com/platform/system/extras
+with unneeded files removed.
 
-Then update directories present in this source package with newer code.
-
-Following directories and files were dropped:
-
-core/fastboot/engineering_key.p12
-core/fastboot/*.sh
-core/include/android
-core/include/corkscrew
-core/include/ctest
-core/include/diskconfig
-core/include/ion
-core/include/mincrypt
-core/include/netutils
-core/include/pixelflinger
-core/include/private
-core/include/sync
-core/include/system
-core/include/usbhost
+The debian/create-snapshot script may be used to generate an
+android-tools.tar.xz from the latest upstream; see this script for a list of
+files to copy from upstream into the tarball.

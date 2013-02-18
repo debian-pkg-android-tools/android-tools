@@ -59,6 +59,10 @@
 
 #else
 
+#include <selinux/selinux.h>
+#include <selinux/label.h>
+#include <selinux/android.h>
+
 #define O_BINARY 0
 
 #endif
@@ -97,25 +101,42 @@ static u32 build_default_directory_structure()
 
 #ifndef USE_MINGW
 /* Read a local directory and create the same tree in the generated filesystem.
-   Calls itself recursively with each directory in the given directory */
+   Calls itself recursively with each directory in the given directory.
+   full_path is an absolute or relative path, with a trailing slash, to the
+   directory on disk that should be copied, or NULL if this is a directory
+   that does not exist on disk (e.g. lost+found).
+   dir_path is an absolute path, with trailing slash, to the same directory
+   if the image were mounted at the specified mount point */
 static u32 build_directory_structure(const char *full_path, const char *dir_path,
 		u32 dir_inode, fs_config_func_t fs_config_func,
-		struct selabel_handle *sehnd)
+		struct selabel_handle *sehnd, int verbose)
 {
 	int entries = 0;
 	struct dentry *dentries;
-	struct dirent **namelist;
+	struct dirent **namelist = NULL;
 	struct stat stat;
 	int ret;
 	int i;
 	u32 inode;
 	u32 entry_inode;
 	u32 dirs = 0;
+	bool needs_lost_and_found = false;
 
-	entries = scandir(full_path, &namelist, filter_dot, (void*)alphasort);
-	if (entries < 0) {
-		error_errno("scandir");
-		return EXT4_ALLOCATE_FAILED;
+	if (full_path) {
+		entries = scandir(full_path, &namelist, filter_dot, (void*)alphasort);
+		if (entries < 0) {
+			error_errno("scandir");
+			return EXT4_ALLOCATE_FAILED;
+		}
+	}
+
+	if (dir_inode == 0) {
+		/* root directory, check if lost+found already exists */
+		for (i = 0; i < entries; i++)
+			if (strcmp(namelist[i]->d_name, "lost+found") == 0)
+				break;
+		if (i == entries)
+			needs_lost_and_found = true;
 	}
 
 	dentries = calloc(entries, sizeof(struct dentry));
@@ -127,8 +148,8 @@ static u32 build_directory_structure(const char *full_path, const char *dir_path
 		if (dentries[i].filename == NULL)
 			critical_error_errno("strdup");
 
-		asprintf(&dentries[i].path, "%s/%s", dir_path, namelist[i]->d_name);
-		asprintf(&dentries[i].full_path, "%s/%s", full_path, namelist[i]->d_name);
+		asprintf(&dentries[i].path, "%s%s", dir_path, namelist[i]->d_name);
+		asprintf(&dentries[i].full_path, "%s%s", full_path, namelist[i]->d_name);
 
 		free(namelist[i]);
 
@@ -157,16 +178,14 @@ static u32 build_directory_structure(const char *full_path, const char *dir_path
 			error("can't set android permissions - built without android support");
 #endif
 		}
-#ifdef HAVE_SELINUX
+#ifndef USE_MINGW
 		if (sehnd) {
-			char *sepath = NULL;
-			asprintf(&sepath, "/%s", dentries[i].path);
-			if (selabel_lookup(sehnd, &dentries[i].secon, sepath, stat.st_mode) < 0) {
-				error("cannot lookup security context for %s", sepath);
+			if (selabel_lookup(sehnd, &dentries[i].secon, dentries[i].path, stat.st_mode) < 0) {
+				error("cannot lookup security context for %s", dentries[i].path);
 			}
-			if (dentries[i].secon)
-				printf("Labeling %s as %s\n", sepath, dentries[i].secon);
-			free(sepath);
+
+			if (dentries[i].secon && verbose)
+				printf("Labeling %s as %s\n", dentries[i].path, dentries[i].secon);
 		}
 #endif
 
@@ -195,14 +214,49 @@ static u32 build_directory_structure(const char *full_path, const char *dir_path
 	}
 	free(namelist);
 
+	if (needs_lost_and_found) {
+		/* insert a lost+found directory at the beginning of the dentries */
+		struct dentry *tmp = calloc(entries + 1, sizeof(struct dentry));
+		memset(tmp, 0, sizeof(struct dentry));
+		memcpy(tmp + 1, dentries, entries * sizeof(struct dentry));
+		dentries = tmp;
+
+		dentries[0].filename = strdup("lost+found");
+		asprintf(&dentries[0].path, "%slost+found", dir_path);
+		dentries[0].full_path = NULL;
+		dentries[0].size = 0;
+		dentries[0].mode = S_IRWXU;
+		dentries[0].file_type = EXT4_FT_DIR;
+		dentries[0].uid = 0;
+		dentries[0].gid = 0;
+		if (sehnd) {
+			if (selabel_lookup(sehnd, &dentries[0].secon, dentries[0].path, dentries[0].mode) < 0)
+				error("cannot lookup security context for %s", dentries[0].path);
+		}
+		entries++;
+		dirs++;
+	}
+
 	inode = make_directory(dir_inode, entries, dentries, dirs);
 
 	for (i = 0; i < entries; i++) {
 		if (dentries[i].file_type == EXT4_FT_REG_FILE) {
 			entry_inode = make_file(dentries[i].full_path, dentries[i].size);
 		} else if (dentries[i].file_type == EXT4_FT_DIR) {
-			entry_inode = build_directory_structure(dentries[i].full_path,
-					dentries[i].path, inode, fs_config_func, sehnd);
+			char *subdir_full_path = NULL;
+			char *subdir_dir_path;
+			if (dentries[i].full_path) {
+				ret = asprintf(&subdir_full_path, "%s/", dentries[i].full_path);
+				if (ret < 0)
+					critical_error_errno("asprintf");
+			}
+			ret = asprintf(&subdir_dir_path, "%s/", dentries[i].path);
+			if (ret < 0)
+				critical_error_errno("asprintf");
+			entry_inode = build_directory_structure(subdir_full_path,
+					subdir_dir_path, inode, fs_config_func, sehnd, verbose);
+			free(subdir_full_path);
+			free(subdir_dir_path);
 		} else if (dentries[i].file_type == EXT4_FT_SYMLINK) {
 			entry_inode = make_link(dentries[i].full_path, dentries[i].link);
 		} else {
@@ -301,7 +355,16 @@ void reset_ext4fs_info() {
     }
 }
 
-int make_ext4fs(const char *filename, s64 len,
+int make_ext4fs_sparse_fd(int fd, long long len,
+                const char *mountpoint, struct selabel_handle *sehnd)
+{
+	reset_ext4fs_info();
+	info.len = len;
+
+	return make_ext4fs_internal(fd, NULL, mountpoint, NULL, 0, 1, 0, 0, sehnd, 0);
+}
+
+int make_ext4fs(const char *filename, long long len,
                 const char *mountpoint, struct selabel_handle *sehnd)
 {
 	int fd;
@@ -316,21 +379,92 @@ int make_ext4fs(const char *filename, s64 len,
 		return EXIT_FAILURE;
 	}
 
-	status = make_ext4fs_internal(fd, NULL, mountpoint, NULL, 0, 0, 0, 1, 0, sehnd);
+	status = make_ext4fs_internal(fd, NULL, mountpoint, NULL, 0, 0, 0, 1, sehnd, 0);
 	close(fd);
 
 	return status;
 }
 
-int make_ext4fs_internal(int fd, const char *directory,
-                         char *mountpoint, fs_config_func_t fs_config_func, int gzip, int sparse,
-                         int crc, int wipe, int init_itabs, struct selabel_handle *sehnd)
+/* return a newly-malloc'd string that is a copy of str.  The new string
+   is guaranteed to have a trailing slash.  If absolute is true, the new string
+   is also guaranteed to have a leading slash.
+*/
+static char *canonicalize_slashes(const char *str, bool absolute)
+{
+	char *ret;
+	int len = strlen(str);
+	int newlen = len;
+	char *ptr;
+
+	if (len == 0 && absolute) {
+		return strdup("/");
+	}
+
+	if (str[0] != '/' && absolute) {
+		newlen++;
+	}
+	if (str[len - 1] != '/') {
+		newlen++;
+	}
+	ret = malloc(newlen + 1);
+	if (!ret) {
+		critical_error("malloc");
+	}
+
+	ptr = ret;
+	if (str[0] != '/' && absolute) {
+		*ptr++ = '/';
+	}
+
+	strcpy(ptr, str);
+	ptr += len;
+
+	if (str[len - 1] != '/') {
+		*ptr++ = '/';
+	}
+
+	if (ptr != ret + newlen) {
+		critical_error("assertion failed\n");
+	}
+
+	*ptr = '\0';
+
+	return ret;
+}
+
+static char *canonicalize_abs_slashes(const char *str)
+{
+	return canonicalize_slashes(str, true);
+}
+
+static char *canonicalize_rel_slashes(const char *str)
+{
+	return canonicalize_slashes(str, false);
+}
+
+int make_ext4fs_internal(int fd, const char *_directory,
+                         const char *_mountpoint, fs_config_func_t fs_config_func, int gzip,
+                         int sparse, int crc, int wipe,
+                         struct selabel_handle *sehnd, int verbose)
 {
 	u32 root_inode_num;
 	u16 root_mode;
+	char *mountpoint;
+	char *directory = NULL;
+	int ret;
 
 	if (setjmp(setjmp_env))
 		return EXIT_FAILURE; /* Handle a call to longjmp() */
+
+	if (_mountpoint == NULL) {
+		mountpoint = strdup("");
+	} else {
+		mountpoint = canonicalize_abs_slashes(_mountpoint);
+	}
+
+	if (_directory) {
+		directory = canonicalize_rel_slashes(_directory);
+	}
 
 	if (info.len <= 0)
 		info.len = get_file_size(fd);
@@ -373,7 +507,8 @@ int make_ext4fs_internal(int fd, const char *directory,
 
 	info.feat_ro_compat |=
 			EXT4_FEATURE_RO_COMPAT_SPARSE_SUPER |
-			EXT4_FEATURE_RO_COMPAT_LARGE_FILE;
+			EXT4_FEATURE_RO_COMPAT_LARGE_FILE |
+			EXT4_FEATURE_RO_COMPAT_GDT_CSUM;
 
 	info.feat_incompat |=
 			EXT4_FEATURE_INCOMPAT_EXTENTS |
@@ -419,7 +554,7 @@ int make_ext4fs_internal(int fd, const char *directory,
 #else
 	if (directory)
 		root_inode_num = build_directory_structure(directory, mountpoint, 0,
-                        fs_config_func, sehnd);
+                        fs_config_func, sehnd, verbose);
 	else
 		root_inode_num = build_default_directory_structure();
 #endif
@@ -427,33 +562,24 @@ int make_ext4fs_internal(int fd, const char *directory,
 	root_mode = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 	inode_set_permissions(root_inode_num, root_mode, 0, 0, 0);
 
-#ifdef HAVE_SELINUX
+#ifndef USE_MINGW
 	if (sehnd) {
-		char *sepath = NULL;
 		char *secontext = NULL;
 
-		if (mountpoint[0] == '/')
-			sepath = strdup(mountpoint);
-		else
-			asprintf(&sepath, "/%s", mountpoint);
-		if (!sepath)
-			critical_error_errno("malloc");
-		if (selabel_lookup(sehnd, &secontext, sepath, S_IFDIR) < 0) {
-			error("cannot lookup security context for %s", sepath);
+		if (selabel_lookup(sehnd, &secontext, mountpoint, S_IFDIR) < 0) {
+			error("cannot lookup security context for %s", mountpoint);
 		}
 		if (secontext) {
-			printf("Labeling %s as %s\n", sepath, secontext);
+			if (verbose) {
+				printf("Labeling %s as %s\n", mountpoint, secontext);
+			}
 			inode_set_selinux(root_inode_num, secontext);
 		}
-		free(sepath);
 		freecon(secontext);
 	}
 #endif
 
 	ext4_update_free();
-
-	if (init_itabs)
-		init_unused_inode_tables();
 
 	ext4_queue_sb();
 
@@ -470,6 +596,9 @@ int make_ext4fs_internal(int fd, const char *directory,
 
 	sparse_file_destroy(info.sparse_file);
 	info.sparse_file = NULL;
+
+	free(mountpoint);
+	free(directory);
 
 	return 0;
 }
