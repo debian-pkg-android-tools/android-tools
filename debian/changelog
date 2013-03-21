@@ -1,3 +1,13 @@
+android-tools (4.2.2+git20130218-2) unstable; urgency=low
+
+  * Only build android-tools-fastboot and android-tools-fsutils on linux
+    ports; the MINGW implementation could be used as a basis for a partial
+    port, but requires careful review.
+  * Always use $triplet-gcc as compiler to simplify rules; thanks Adam Conrad.
+  * core/include/mincrypt/* is under BSD-3; thanks Ansgar Burchardt.
+
+ -- Loïc Minier <lool@debian.org>  Thu, 21 Mar 2013 01:04:18 +0100
+
 android-tools (4.2.2+git20130218-1) unstable; urgency=low
 
   * Add myself to Uploaders with Marcin's permission; also sponsor NEW

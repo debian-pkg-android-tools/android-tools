@@ -2,15 +2,19 @@ Source: android-tools
 Section: devel
 Priority: extra
 Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
-Uploaders: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-           Loïc Minier <lool@debian.org>
-Build-Depends: debhelper (>= 9), zlib1g-dev, python, libssl-dev, libselinux-dev
+Uploaders: Loïc Minier <lool@debian.org>,
+           Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Build-Depends: debhelper (>= 9),
+               libselinux-dev [linux-any],
+               libssl-dev,
+               python,
+               zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 
 Package: android-tools-adb
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android Debug Bridge CLI tool
  Android Debug Bridge (adb) is a versatile tool lets you manage the
  state of an emulator instance or Android-powered device. It is a
@@ -28,8 +32,8 @@ Description: Android Debug Bridge CLI tool
  instance.
 
 Package: android-tools-fastboot
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Architecture: linux-any
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android Fastboot protocol CLI tool
  Fastboot is a diagnostic protocol primarily used to update the flash
  filesystem of Android devices over USB.
@@ -37,8 +41,8 @@ Description: Android Fastboot protocol CLI tool
  This package provides the fastboot command-line tool.
 
 Package: android-tools-fsutils
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
+Architecture: linux-any
+Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
 Description: Android ext4 utilities with sparse support
  Android images (.img) are typically ext4 filesystems in a special
  sparse file format come in a special format.
