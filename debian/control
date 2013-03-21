@@ -5,12 +5,15 @@ Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
 Uploaders: Loïc Minier <lool@debian.org>,
            Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 Build-Depends: debhelper (>= 9),
-               libselinux-dev [linux-any],
+               libselinux-dev,
                libssl-dev,
                python,
                zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
+# requires porting of selinux calls in extras/ext4_utils and
+# core/fastboot/usb_*.c implementation; hurd
+Architecture: linux-any
 
 Package: android-tools-adb
 Architecture: any

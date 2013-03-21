@@ -1,3 +1,10 @@
+android-tools (4.2.2+git20130218-3) unstable; urgency=low
+
+  * Only build for linux hosts; adb / fastboot also lack an USB host
+    implementation for kFreeBSD and Hurd, and need a PATH_MAX on Hurd too.
+
+ -- Loïc Minier <lool@debian.org>  Thu, 21 Mar 2013 02:14:09 +0100
+
 android-tools (4.2.2+git20130218-2) unstable; urgency=low
 
   * Only build android-tools-fastboot and android-tools-fsutils on linux
