@@ -1,1 +1,4 @@
 remove-selinux-android.patch
+# these were introduced with the adbd build
+reboot-syscall.patch
+use-capability.patch
