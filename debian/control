@@ -39,4 +39,4 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
 Description: Android ext4_utils with sparse support
  Utilities needed to generate sparse ext4 images that can be used for
- flashing android devices.
+ flashing Android devices.
