@@ -5,6 +5,7 @@ Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
 Uploaders: Loïc Minier <lool@debian.org>,
            Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 Build-Depends: debhelper (>= 9),
+               libcap-dev,
                libselinux-dev,
                libssl-dev,
                python,
