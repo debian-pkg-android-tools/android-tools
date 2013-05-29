@@ -3,5 +3,4 @@
 
 ACTION=="add|change", SUBSYSTEM=="usb", \
   ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="4e40|d001", \
-  TEST=="/var/run/ConsoleKit/database", \
-  RUN+="udev-acl --action=$env{ACTION} --device=$env{DEVNAME}"
+  TAG+="uaccess"
