@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Contributed by: Intel Corporation
- */
 
-#if defined(USE_SSE2)
+#ifndef __CUTILS_MULTIUSER_H
+#define __CUTILS_MULTIUSER_H
 
-# include "cache_wrapper.S"
-# undef __i686
-# define USE_AS_ANDROID
-# define sse2_memset32_atom android_memset32
-# include "sse2-memset32-atom.S"
+#include <sys/types.h>
 
-#else
-
-# include "memset32.S"
-
+#ifdef __cplusplus
+extern "C" {
 #endif
 
+// NOTE: keep in sync with android.os.UserId
+
+#define MULTIUSER_APP_PER_USER_RANGE 100000
+
+typedef uid_t userid_t;
+typedef uid_t appid_t;
+
+extern userid_t multiuser_get_user_id(uid_t uid);
+extern appid_t multiuser_get_app_id(uid_t uid);
+extern uid_t multiuser_get_uid(userid_t userId, appid_t appId);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __CUTILS_MULTIUSER_H */

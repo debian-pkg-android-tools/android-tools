@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Contributed by: Intel Corporation
- */
 
-/* Values are optimized for Atom */
-#define SHARED_CACHE_SIZE       (512*1024)            /* Atom L2 Cache */
-#define DATA_CACHE_SIZE         (24*1024)             /* Atom L1 Data Cache */
-#define SHARED_CACHE_SIZE_HALF  (SHARED_CACHE_SIZE / 2)
-#define DATA_CACHE_SIZE_HALF    (DATA_CACHE_SIZE / 2)
+#include <cutils/multiuser.h>
+
+userid_t multiuser_get_user_id(uid_t uid) {
+    return uid / MULTIUSER_APP_PER_USER_RANGE;
+}
+
+appid_t multiuser_get_app_id(uid_t uid) {
+    return uid % MULTIUSER_APP_PER_USER_RANGE;
+}
+
+uid_t multiuser_get_uid(userid_t userId, appid_t appId) {
+    return userId * MULTIUSER_APP_PER_USER_RANGE + (appId % MULTIUSER_APP_PER_USER_RANGE);
+}

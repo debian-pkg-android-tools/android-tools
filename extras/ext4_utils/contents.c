@@ -44,11 +44,6 @@ static u32 dentry_size(u32 entries, struct dentry *dentries)
 		len += dentry_len;
 	}
 
-	/* include size of the dentry used to pad until the end of the block */
-	if (len % info.block_size + 8 > info.block_size)
-		len += info.block_size - (len % info.block_size);
-	len += 8;
-
 	return len;
 }
 
@@ -160,11 +155,8 @@ u32 make_directory(u32 dir_inode_num, u32 entries, struct dentry *dentries,
 		}
 	}
 
-	dentry = (struct ext4_dir_entry_2 *)(data + offset);
-	dentry->inode = 0;
-	dentry->rec_len = len - offset;
-	dentry->name_len = 0;
-	dentry->file_type = EXT4_FT_UNKNOWN;
+	/* pad the last dentry out to the end of the block */
+	dentry->rec_len += len - offset;
 
 	return inode_num;
 }
@@ -250,7 +242,6 @@ int inode_set_permissions(u32 inode_num, u16 mode, u16 uid, u16 gid, u32 mtime)
 	return 0;
 }
 
-#ifdef HAVE_SELINUX
 #define XATTR_SELINUX_SUFFIX "selinux"
 
 /* XXX */
@@ -292,9 +283,3 @@ int inode_set_selinux(u32 inode_num, const char *secon)
 
 	return 0;
 }
-#else
-int inode_set_selinux(u32 inode_num, const char *secon)
-{
-	return 0;
-}
-#endif
