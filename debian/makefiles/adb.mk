@@ -1,5 +1,8 @@
 # Makefile for adb; from https://heiher.info/2227.html
 
+SRCDIR ?= $(CURDIR)
+
+VPATH+= $(SRCDIR)/core/adb
 SRCS+= adb.c
 SRCS+= adb_client.c
 SRCS+= adb_auth_host.c
@@ -17,7 +20,7 @@ SRCS+= usb_linux.c
 SRCS+= usb_vendors.c
 SRCS+= utils.c
 
-VPATH+= ../libcutils
+VPATH+= $(SRCDIR)/core/libcutils
 SRCS+= abort_socket.c
 SRCS+= socket_inaddr_any_server.c
 SRCS+= socket_local_client.c
@@ -28,7 +31,7 @@ SRCS+= socket_network_client.c
 SRCS+= list.c
 SRCS+= load_file.c
 
-VPATH+= ../libzipfile
+VPATH+= $(SRCDIR)/core/libzipfile
 SRCS+= centraldir.c
 SRCS+= zipfile.c
 
@@ -37,8 +40,8 @@ CPPFLAGS+= -DADB_HOST=1
 CPPFLAGS+= -DHAVE_FORKEXEC=1
 CPPFLAGS+= -DHAVE_SYMLINKS
 CPPFLAGS+= -DHAVE_TERMIO_H
-CPPFLAGS+= -I.
-CPPFLAGS+= -I../include
+CPPFLAGS+= -I$(SRCDIR)/core/adb
+CPPFLAGS+= -I$(SRCDIR)/core/include
 
 LIBS+= -lc -lpthread -lz -lcrypto
 
