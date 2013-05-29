@@ -8,15 +8,6 @@ Build-Depends: debhelper (>= 9), zlib1g-dev, python
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 
-Package: android-tools
-Architecture: any
-Depends: android-tools-adb, android-tools-fastboot, android-tools-fsutils
-Description: metapackage to install ADB, Fastboot and Android ext4_utils
- There are several Android related tools which users and developers find
- useful. For now list covers Android Debug Bridge (adb), Fastboot flashing tool
- and ext4 utils to generate sparce images needed to flash Android devices.
- 
-
 Package: android-tools-adb
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -48,4 +39,4 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
 Description: Android ext4_utils with sparse support
  Utilities needed to generate sparse ext4 images that can be used for
- flashing Android devices.
+ flashing android devices.

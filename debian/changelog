@@ -1,9 +1,3 @@
-android-tools (4.1.1+git20120801-2) unstable; urgency=low
-
-  * Added android-tools metapackage to install all packages.
-
- -- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>  Thu, 22 Nov 2012 13:13:47 +0100
-
 android-tools (4.1.1+git20120801-1ubuntu1) raring; urgency=low
 
   * Build extras/ext4_utils as well.
