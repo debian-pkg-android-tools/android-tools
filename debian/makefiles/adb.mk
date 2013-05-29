@@ -39,7 +39,6 @@ CPPFLAGS+= -DHAVE_SYMLINKS
 CPPFLAGS+= -DHAVE_TERMIO_H
 CPPFLAGS+= -I.
 CPPFLAGS+= -I../include
-CPPFLAGS+= -I../../../external/zlib
 
 LIBS+= -lc -lpthread -lz -lcrypto
 
