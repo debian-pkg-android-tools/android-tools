@@ -3,3 +3,4 @@ remove-selinux-android.patch
 reboot-syscall.patch
 use-capability.patch
 env-props.patch
+byteswap-constants.patch

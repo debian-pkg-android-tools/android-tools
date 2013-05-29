@@ -1,0 +1,27 @@
+Subject: pure cpp implementation of htole16 and htole32 as it's only used on constants and the generic version can't be computed by cpp on powerpc, hence breaking the static initializers
+Author: Loïc Minier <loic.minier@ubuntu.com>
+
+--- a/core/adb/usb_linux_client.c
++++ b/core/adb/usb_linux_client.c
+@@ -34,8 +34,19 @@
+ #define MAX_PACKET_SIZE_FS	64
+ #define MAX_PACKET_SIZE_HS	512
+ 
+-#define cpu_to_le16(x)  htole16(x)
+-#define cpu_to_le32(x)  htole32(x)
++#define bswap_constant_16(x) \
++     ((((x) & 0xff00u) >> 8) | (((x) & 0x00ffu) <<  8))
++#define bswap_constant_32(x) \
++     ((((x) & 0xff000000u) >> 24) | (((x) & 0x00ff0000u) >>  8) | \
++      (((x) & 0x0000ff00u) <<  8) | (((x) & 0x000000ffu) << 24))
++
++#if __BYTE_ORDER == __LITTLE_ENDIAN
++# define cpu_to_le16(x)  (x)
++# define cpu_to_le32(x)  (x)
++#else
++# define cpu_to_le16(x)  bswap_constant_16(x)
++# define cpu_to_le32(x)  bswap_constant_32(x)
++#endif
+ 
+ struct usb_handle
+ {
