@@ -11,9 +11,6 @@ Build-Depends: debhelper (>= 9),
                zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
-# requires porting of selinux calls in extras/ext4_utils and
-# core/fastboot/usb_*.c implementation; hurd
-Architecture: linux-any
 
 Package: android-tools-adb
 Architecture: any
