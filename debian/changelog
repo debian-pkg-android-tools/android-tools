@@ -1,6 +1,33 @@
 android-tools (4.2.2+git20130529-1) UNRELEASED; urgency=low
 
-  * 
+  * Drop Architecture: linux-any field in the Source control stanza as that
+    breaks Launchpad and creates an useless delta with Ubuntu; drop it;
+    inspired from changes by Logan Rosen in 4.2.2+git20130218-3ubuntu1.
+  * Use uaccess in udev rules instead of deprecated udev-acl; thanks
+    Martin Pitt.
+  * Update udev rules to support more devices: 18d1:4e30 (fastboot on
+    maguro/toro), 18d1:4ee0 (fastboot on mako/manta) and 18d1:d002 (adb
+    recovery) and split rules in corresponding packages; from
+    4.2.2+git20130218-3ubuntu3; thanks Sergio Schvezov.
+  * Add Vcs-Git
+  * Drop bogus external/zlib include in makefiles.
+  * Rework the makefiles and build rules to use a builddir per component
+    we're building.  This paves the way to building adbd and adb out of the
+    same source, keeps the source tree clean and for some reason also fixes
+    ccache.
+  * Various changes and patches to help with adbd build:
+    - adb.mk: Define _XOPEN_SOURCE _GNU_SOURCE as in Android.mk.
+    - Add patch to use glibc syscall() for reboot.
+    - Add patch to use linux/capability.h on linux systems.
+    - Add patch to fake Android init properties via env vars.
+    - Update create-snapshot script to pull more sources needed for adbd; pull
+      libhardware includes from libhardware repo and private filesystem and
+      capability includes from core repo.
+    - Add local makefile to build adbd
+  * Build adbd and install in adb package for now
+  * New upstream snapshot 4.2.2+git20130529; this is mainly to pick up new
+    source files but also picks up a number of minor upstream fixes.
+    - Add build-dep on libcap-dev for sys/capability.h.
 
  -- Loïc Minier <lool@debian.org>  Wed, 29 May 2013 22:27:05 +0200
 
