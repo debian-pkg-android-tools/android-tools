@@ -20,6 +20,8 @@ override_dh_clean:
 override_dh_auto_build:
 	mkdir -p builddir/adb
 	$(MAKE) -f $(M)/adb.mk -C builddir/adb
+	mkdir -p builddir/adbd
+	$(MAKE) -f $(M)/adbd.mk -C builddir/adbd
 	mkdir -p builddir/fastboot
 	$(MAKE) -f $(M)/fastboot.mk -C builddir/fastboot
 	mkdir -p builddir/ext4_utils
