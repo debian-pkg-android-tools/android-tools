@@ -26,6 +26,7 @@
 ANDROID_MIRROR="https://android.googlesource.com/"
 CORE_REPO="$ANDROID_MIRROR/platform/system/core"
 EXTRAS_REPO="$ANDROID_MIRROR/platform/system/extras"
+LIBHARDWARE_REPO="$ANDROID_MIRROR/platform/hardware/libhardware"
 GITIGNORE="
 *
 !*.[ch]
@@ -35,6 +36,7 @@ GITIGNORE="
 !/core/include/
 !/core/include/cutils/
 !/core/include/mincrypt/
+!/core/include/private/
 !/core/include/zipfile/
 !/core/libcutils/
 !/core/libzipfile/
@@ -47,6 +49,9 @@ GITIGNORE="
 !/extras/ext4_utils/
 !/extras/ext4_utils/mkuserimg.sh
 !/extras/ext4_utils/test_ext4fixup
+!/libhardware/
+!/libhardware/include/
+!/libhardware/include/hardware/
 "
 
 self="$(basename "$0")"
@@ -85,8 +90,10 @@ in_work_dir() {
     git clone "$CORE_REPO"
     log_i "Cloning extras..."
     git clone "$EXTRAS_REPO"
+    log_i "Cloning libhardware..."
+    git clone "$LIBHARDWARE_REPO"
 
-    for d in core extras; do
+    for d in core extras libhardware; do
         (cd "$d" && log_i "$d: abbrev=`git_abbrev` tag=`git_latest_tag`")
         rm -rf "$d/.git"
     done
