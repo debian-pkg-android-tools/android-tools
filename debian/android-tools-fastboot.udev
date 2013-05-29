@@ -1,6 +1,8 @@
-# Udev rules for letting the console user access the Nexus 7
-# device node, needed for fastboot flashing.
+# Set ACLs for console users on fastboot USB devices
+# 4e30 maguro/toro
+# 4e40 grouper
+# 4ee0 mako/manta
 
 ACTION=="add|change", SUBSYSTEM=="usb", \
-  ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="4e40|d001", \
+  ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="4e30|4e40|4ee0", \
   TAG+="uaccess"
