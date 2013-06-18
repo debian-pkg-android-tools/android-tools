@@ -1,4 +1,4 @@
-android-tools (4.2.2+git20130529-1) UNRELEASED; urgency=low
+android-tools (4.2.2+git20130529-1) unstable; urgency=low
 
   * Drop Architecture: linux-any field in the Source control stanza as that
     breaks Launchpad and creates an useless delta with Ubuntu; drop it;
@@ -34,7 +34,7 @@ android-tools (4.2.2+git20130529-1) UNRELEASED; urgency=low
   * Add patch adbd-use-user-shell from Ubuntu by Stéphane Graber to use the
     running user's shell by default.
 
- -- Loïc Minier <lool@debian.org>  Wed, 29 May 2013 22:27:05 +0200
+ -- Loïc Minier <lool@debian.org>  Wed, 19 Jun 2013 00:17:40 +0200
 
 android-tools (4.2.2+git20130218-3) unstable; urgency=low
 
