@@ -1,0 +1,36 @@
+Subject: adbd: Use the running user's shell by default
+Author: Stéphane Graber <stgraber@ubuntu.com>
+
+--- a/core/adb/services.c
++++ b/core/adb/services.c
+@@ -19,6 +19,7 @@
+ #include <unistd.h>
+ #include <string.h>
+ #include <errno.h>
++#include <pwd.h>
+ 
+ #include "sysdeps.h"
+ 
+@@ -375,10 +376,20 @@
+     adb_thread_t t;
+     int ret_fd;
+     pid_t pid;
++
++    struct passwd *user = getpwuid(getuid());
++    char *shell;
++
++    if (user && user->pw_shell) {
++        shell = user->pw_shell;
++    } else {
++        shell = SHELL_COMMAND;
++    }
++
+     if(name) {
+-        ret_fd = create_subprocess(SHELL_COMMAND, "-c", name, &pid);
++        ret_fd = create_subprocess(shell, "-c", name, &pid);
+     } else {
+-        ret_fd = create_subprocess(SHELL_COMMAND, "-", 0, &pid);
++        ret_fd = create_subprocess(shell, "-", 0, &pid);
+     }
+     D("create_subprocess() ret_fd=%d pid=%d\n", ret_fd, pid);
+ 

@@ -4,3 +4,4 @@ reboot-syscall.patch
 use-capability.patch
 env-props.patch
 byteswap-constants.patch
+adbd-use-user-shell.patch

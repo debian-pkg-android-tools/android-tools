@@ -28,6 +28,8 @@ android-tools (4.2.2+git20130529-1) UNRELEASED; urgency=low
   * New upstream snapshot 4.2.2+git20130529; this is mainly to pick up new
     source files but also picks up a number of minor upstream fixes.
     - Add build-dep on libcap-dev for sys/capability.h.
+  * Add patch adbd-use-user-shell from Ubuntu by Stéphane Graber to use the
+    running user's shell by default.
 
  -- Loïc Minier <lool@debian.org>  Wed, 29 May 2013 22:27:05 +0200
 
