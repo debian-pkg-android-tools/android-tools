@@ -24,7 +24,10 @@ android-tools (4.2.2+git20130529-1) UNRELEASED; urgency=low
       libhardware includes from libhardware repo and private filesystem and
       capability includes from core repo.
     - Add local makefile to build adbd
-  * Build adbd and install in adb package for now
+  * On Ubuntu and derivatives, build adbd binary and corresponding package
+    with upstart job taken from Ubuntu package 4.2.2+git20130218-3ubuntu9;
+    this is disabled on Debian and derivatives because it's essentially a
+    security hole in the form of an unauthenticated remote root shell.
   * New upstream snapshot 4.2.2+git20130529; this is mainly to pick up new
     source files but also picks up a number of minor upstream fixes.
     - Add build-dep on libcap-dev for sys/capability.h.

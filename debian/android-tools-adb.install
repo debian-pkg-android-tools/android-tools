@@ -1,2 +1,1 @@
-builddir/adb/adb   usr/bin/
-builddir/adbd/adbd usr/sbin/
+builddir/adb/adb usr/bin/
