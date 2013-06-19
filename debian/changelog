@@ -1,4 +1,4 @@
-android-tools (4.2.2+git20130529-2) UNRELEASED; urgency=low
+android-tools (4.2.2+git20130529-2) unstable; urgency=low
 
   * Misc fixes to adbd upstart job.
   * Misc fixes to adbd env props support patch.
