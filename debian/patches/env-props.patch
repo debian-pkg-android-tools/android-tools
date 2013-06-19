@@ -1,28 +1,45 @@
-Subject: fake Android init properties via env vars
+Subject: fake Android init properties via env vars; dots in property names must be replaced with underscores as dots aren't allowed in environment variables, which means there's an unlikely collision risk
 Author: Loïc Minier <loic.minier@ubuntu.com>
 
 --- /dev/null
 +++ b/core/adb/env-props.c
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,52 @@
 +#include <cutils/properties.h>
 +#include <string.h>
 +#include <stdlib.h>
 +
 +#define ENV_PROPS_PREFIX "APROP_"
 +
-+#define ENV_PROPS_KEY_MAX (PROPERTY_KEY_MAX + sizeof ENV_PROPS_PREFIX)
++#define ENV_PROPS_KEY_MAX (PROPERTY_KEY_MAX + sizeof ENV_PROPS_PREFIX - 1)
++
++/* replace dots with underscores as dots aren't valid in environment variable
++ * names */
++void dots_to_underscores(char *s) {
++    char *dot;
++
++    dot = s;
++    while (dot = strchr(dot, '.')) {
++        *dot = '_';
++    }
++
++}
 +
 +int property_get(const char *key, char *value, const char *default_value) {
 +    char name[ENV_PROPS_KEY_MAX] = ENV_PROPS_PREFIX;
 +    char *env;
 +
-+    strcpy(name + sizeof ENV_PROPS_PREFIX, key);
++    name[ENV_PROPS_KEY_MAX - 1] = '\0';
++    strncpy(name + sizeof ENV_PROPS_PREFIX - 1,
++            key,
++            ENV_PROPS_KEY_MAX - (sizeof ENV_PROPS_PREFIX - 1) - 1);
++    dots_to_underscores(name);
 +
 +    env = getenv(name);
++    value[PROPERTY_VALUE_MAX - 1] = '\0';
 +    if (env) {
-+        strcpy(value, env);
++        strncpy(value, env, PROPERTY_VALUE_MAX - 1);
 +    } else {
-+        strcpy(value, default_value);
++        strncpy(value, default_value, PROPERTY_VALUE_MAX - 1);
 +    }
 +    return strlen(value);
 +}
@@ -30,6 +47,12 @@ Author: Loïc Minier <loic.minier@ubuntu.com>
 +int property_set(const char *key, const char *value) {
 +    char name[ENV_PROPS_KEY_MAX] = ENV_PROPS_PREFIX;
 +
-+    strcpy(name + sizeof ENV_PROPS_PREFIX, key);
++    name[ENV_PROPS_KEY_MAX - 1] = '\0';
++    strncpy(name + sizeof ENV_PROPS_PREFIX - 1,
++            key,
++            ENV_PROPS_KEY_MAX - (sizeof ENV_PROPS_PREFIX - 1) - 1);
++
++    dots_to_underscores(name);
++
 +    return setenv(name, value, 1);
 +}
