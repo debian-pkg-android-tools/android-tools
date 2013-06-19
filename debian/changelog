@@ -1,3 +1,10 @@
+android-tools (4.2.2+git20130529-2) UNRELEASED; urgency=low
+
+  * Misc fixes to adbd upstart job.
+  * Misc fixes to adbd env props support patch.
+
+ -- Loïc Minier <lool@debian.org>  Wed, 19 Jun 2013 17:16:18 +0200
+
 android-tools (4.2.2+git20130529-1) unstable; urgency=low
 
   * Drop Architecture: linux-any field in the Source control stanza as that
