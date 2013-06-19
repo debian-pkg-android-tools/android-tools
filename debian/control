@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 9),
                zlib1g-dev
 Standards-Version: 3.9.4
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
-Vcs-Git: git://git.debian.org/android-tools/android-tools.git
+Vcs-Git: git://anonscm.debian.org/android-tools/android-tools.git
 
 Package: android-tools-adb
 Architecture: any
