@@ -9,25 +9,26 @@ start on filesystem or runlevel [2345]
 respawn
 
 pre-start script
-	[ ! -d /sys/class/android_usb ] && { stop; exit 0; }
+	sysfs_path=/sys/class/android_usb/android0
+	[ ! -d $sysfs_path ] && { stop; exit 0; }
 
-	# retrieve the product info from Android
+	# retrieve product info from Android
 	manufacturer=$(getprop ro.product.manufacturer Android)
 	model=$(getprop ro.product.model Android)
 	serial=$(getprop ro.serialno 0123456789ABCDEF)
 
-	echo 0 >/sys/class/android_usb/android0/enable
+	echo 0 >$sysfs_path/enable
 
-	echo 18d1 >/sys/class/android_usb/android0/idVendor
-	echo d002 >/sys/class/android_usb/android0/idProduct
+	echo 18d1 >$sysfs_path/idVendor
+	echo d002 >$sysfs_path/idProduct
 
-	echo adb >/sys/class/android_usb/android0/functions
+	echo adb >$sysfs_path/functions
 
-	echo -n $manufacturer >/sys/class/android_usb/android0/iManufacturer
-	echo -n $model >/sys/class/android_usb/android0/iProduct
-	echo -n $serial >/sys/class/android_usb/android0/iSerial
+	echo -n $manufacturer >$sysfs_path/iManufacturer
+	echo -n $model >$sysfs_path/iProduct
+	echo -n $serial >$sysfs_path/iSerial
 
-	echo 1 >/sys/class/android_usb/android0/enable
+	echo 1 >$sysfs_path/enable
 end script
 
 # ro.secure=0 allows running as root; alternatively you may set
