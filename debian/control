@@ -38,7 +38,7 @@ Description: Android Debug Bridge CLI tool
 # install it
 Package: android-tools-adbd
 Architecture: linux-any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: libhybris-utils, ${misc:Depends}, ${shlibs:Depends}
 Description: Android Debug Bridge daemon
  Android Debug Bridge (adb) is a versatile tool lets you manage the
  state of an emulator instance or Android-powered device. It is a
