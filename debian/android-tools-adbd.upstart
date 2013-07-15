@@ -14,8 +14,8 @@ pre-start script
 
 	# retrieve product info from Android
 	manufacturer=$(getprop ro.product.manufacturer Android)
-	model=$(getprop ro.product.model Android)
-	serial=$(getprop ro.serialno 0123456789ABCDEF)
+	model=$(       getprop ro.product.model        Android)
+	serial=$(      getprop ro.serialno             0123456789ABCDEF)
 
 	echo 0 >$sysfs_path/enable
 
@@ -25,8 +25,8 @@ pre-start script
 	echo adb >$sysfs_path/functions
 
 	echo -n $manufacturer >$sysfs_path/iManufacturer
-	echo -n $model >$sysfs_path/iProduct
-	echo -n $serial >$sysfs_path/iSerial
+	echo -n $model        >$sysfs_path/iProduct
+	echo -n $serial       >$sysfs_path/iSerial
 
 	echo 1 >$sysfs_path/enable
 end script
