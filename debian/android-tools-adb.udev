@@ -25,8 +25,8 @@
 # 4e24 rndis,adb
 
 ACTION=="add|change", SUBSYSTEM=="usb", \
-  ATTRS{idVendor}=="18d1", \ 
-  ATTRS{idProduct}=="2d01|2d03|2d05|4ee2|4ee4|4ee6|4e42|4e44|4e24|d001|d002"
+  ATTRS{idVendor}=="18d1", \
+  ATTRS{idProduct}=="2d01|2d03|2d05|4ee2|4ee4|4ee6|4e42|4e44|4e24|d001|d002", \
   TAG+="uaccess"
 
 # Applies to 04e8
@@ -44,6 +44,6 @@ ACTION=="add|change", SUBSYSTEM=="usb", \
 # 6866 ptp,adb
 
 ACTION=="add|change", SUBSYSTEM=="usb", \
-  ATTRS{idVendor}=="04e8", \ 
-  ATTRS{idProduct}=="685e|6860|6864|6866|6866"
+  ATTRS{idVendor}=="04e8", \
+  ATTRS{idProduct}=="685e|6860|6864|6866|6866", \
   TAG+="uaccess"
