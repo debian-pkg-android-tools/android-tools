@@ -39,23 +39,6 @@ Description: Android Debug Bridge CLI tool
  A daemon, which runs as a background process on each emulator or device
  instance.
 
-# this package is only built on Ubuntu and derivatives because it's dangerous:
-# it basically will run a remote root shell with no authentication if you
-# install it
-Package: android-tools-adbd
-Architecture: linux-any
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Android Debug Bridge daemon
- Android Debug Bridge (adb) is a versatile tool that lets you manage the state
- of an emulator instance or Android-powered device. It is a client-server
- program that includes three components.
- .
- This package provides the daemon, which runs as a background process
- on a device you want to connect to from a PC.
- .
- WARNING: this package will basically run a remote root shell on your system
- upon installation with no authentication.
-
 Package: android-tools-fastboot
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}

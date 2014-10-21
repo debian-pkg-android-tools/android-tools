@@ -1,10 +1,5 @@
 remove-selinux-android.patch
-# these were introduced with the adbd build
-reboot-syscall.patch
 use-capability.patch
-env-props.patch
-byteswap-constants.patch
-adbd-use-user-shell.patch
 use-local-socket.patch
 ppc64el-ftbfs.patch
 add-bq-vendor-id.patch

@@ -10,16 +10,6 @@ M := $(CURDIR)/debian/makefiles
 INSTALL := install
 INSTALL_PROGRAM = $(INSTALL)
 
-DERIVES_FROM_UBUNTU := $(shell dpkg-vendor --derives-from Ubuntu && echo 1 || echo 0)
-
-# disable adbd on Debian for now as it's insecure
-ifeq ($(DERIVES_FROM_UBUNTU),1)
-BUILD_ADBD := 1
-else
-BUILD_ADBD := 0
-export DH_OPTIONS += -Nandroid-tools-adbd
-endif
-
 %:
 	dh $@ --with python2 --with bash-completion
 
@@ -30,10 +20,6 @@ override_dh_clean:
 override_dh_auto_build:
 	mkdir -p builddir/adb
 	$(MAKE) -f $(M)/adb.mk -C builddir/adb
-ifeq ($(BUILD_ADBD),1)
-	mkdir -p builddir/adbd
-	$(MAKE) -f $(M)/adbd.mk -C builddir/adbd
-endif
 	mkdir -p builddir/fastboot
 	$(MAKE) -f $(M)/fastboot.mk -C builddir/fastboot
 	mkdir -p builddir/ext4_utils
