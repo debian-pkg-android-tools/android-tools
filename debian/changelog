@@ -1,3 +1,20 @@
+android-tools (4.2.2+git20130529-3) unstable; urgency=low
+
+  * Update my email address.
+
+  [ Hilko Bengen <bengen@debian.org> ]
+  * Fix previous local socket patch for adb
+    (Closes: #715238, #716996, #717525)
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Tue, 23 Jul 2013 23:51:22 +0200
+
+android-tools (4.2.2+git20130529-2.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * adb: Use local socket by default (Closes: #694176)
+
+ -- Hilko Bengen <bengen@debian.org>  Thu, 04 Jul 2013 23:28:34 +0200
+
 android-tools (4.2.2+git20130529-2) unstable; urgency=low
 
   * Misc fixes to adbd upstart job.

@@ -5,30 +5,15 @@
 description	"start adbd"
 
 start on filesystem or runlevel [2345]
-
-respawn
+stop on runlevel [!2345]
 
 pre-start script
-	sysfs_path=/sys/class/android_usb/android0
-	[ ! -d $sysfs_path ] && { stop; exit 0; }
-
-	# retrieve product info from Android
-	manufacturer=$(getprop ro.product.manufacturer Android)
-	model=$(       getprop ro.product.model        Android)
-	serial=$(      getprop ro.serialno             0123456789ABCDEF)
-
-	echo 0 >$sysfs_path/enable
-
-	echo 18d1 >$sysfs_path/idVendor
-	echo d002 >$sysfs_path/idProduct
-
-	echo adb >$sysfs_path/functions
-
-	echo -n $manufacturer >$sysfs_path/iManufacturer
-	echo -n $model        >$sysfs_path/iProduct
-	echo -n $serial       >$sysfs_path/iSerial
-
-	echo 1 >$sysfs_path/enable
+	[ ! -d /sys/class/android_usb ] && { stop; exit 0; }
+	echo 0 >/sys/class/android_usb/android0/enable
+	echo 18d1 >/sys/class/android_usb/android0/idVendor
+	echo d002 >/sys/class/android_usb/android0/idProduct
+	echo adb >/sys/class/android_usb/android0/functions
+	echo 1 >/sys/class/android_usb/android0/enable
 end script
 
 # ro.secure=0 allows running as root; alternatively you may set

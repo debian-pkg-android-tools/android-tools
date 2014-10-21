@@ -1,7 +1,7 @@
 Source: android-tools
 Section: devel
 Priority: extra
-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
+Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
 Uploaders: Loïc Minier <lool@debian.org>,
            Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 Build-Depends: debhelper (>= 9),
@@ -38,7 +38,7 @@ Description: Android Debug Bridge CLI tool
 # install it
 Package: android-tools-adbd
 Architecture: linux-any
-Depends: libhybris-utils, ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android Debug Bridge daemon
  Android Debug Bridge (adb) is a versatile tool lets you manage the
  state of an emulator instance or Android-powered device. It is a
