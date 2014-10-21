@@ -137,32 +137,6 @@ License: BSD-3-clause
  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Files: core/libcutils/private.h
-       core/libcutils/tzfile.h
-       core/libcutils/tztime.c
-Copyright: none
-License: public-domain
- This file is in the public domain, so clarified as of              │
- 1996-06-05 by Arthur David Olson.
-
-Files: core/libcutils/tzstrftime.c
-Copyright: 1989 The Regents of the University of California.
-License: Prior-BSD-License
- Copyright (c) 1989 The Regents of the University of California.
- All rights reserved.
- .
- Redistribution and use in source and binary forms are permitted
- provided that the above copyright notice and this paragraph are
- duplicated in all such forms and that any documentation,
- advertising materials, and other materials related to such
- distribution and use acknowledge that the software was developed
- by the University of California, Berkeley. The name of the
- University may not be used to endorse or promote products derived
- from this software without specific prior written permission.
- THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
- IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-
 Files: extras/ext4_utils/sha1.c
        extras/ext4_utils/sha1.h
 Copyright: none
@@ -182,7 +156,7 @@ Files: extras/ext4_utils/ext4_extents.h
        extras/ext4_utils/ext4_jbd2.h
        extras/ext4_utils/jbd2.h
 Copyright: none
-License: public domain
+License: public-domain
  This header was automatically generated from a Linux kernel header
  of the same name, to make information necessary for userspace to
  call into the kernel available to libc.  It contains only constants,
