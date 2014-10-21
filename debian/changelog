@@ -1,3 +1,18 @@
+android-tools (4.2.2+git20130529-4) unstable; urgency=low
+
+  [ Hans-Christoph Steiner ]
+  * set "Android Tools" as Maintainer, add myself as Uploader, remove Marcin
+  * update udev rules (Closes: #690453, #754566)
+  * fix odd language in Description (Closes: #710785)
+  * fix missing word in adb Description (Closes: #745358)
+  * include AndroidConfig.h in builds (Closes: #700461)
+  * include bash completion rules for adb and fastboot
+
+  [ Ramakrishnan Muthukrishnan ]
+  * include man page for fastboot (Closes: #741967)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Tue, 21 Oct 2014 12:22:15 -0400
+
 android-tools (4.2.2+git20130529-3) unstable; urgency=low
 
   * Update my email address.
