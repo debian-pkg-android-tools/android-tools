@@ -1,9 +1,10 @@
 Source: android-tools
 Section: devel
 Priority: extra
-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
-Uploaders: Loïc Minier <lool@debian.org>,
-           Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Maintainer: Android tools Maintainer <android-tools-devel@lists.alioth.debian.org>
+Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.org>,
+           Hans-Christoph Steiner <hans@eds.org>,
+           Loïc Minier <lool@debian.org>
 Build-Depends: debhelper (>= 9),
                libcap-dev,
                libselinux-dev,
