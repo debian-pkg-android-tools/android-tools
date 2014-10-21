@@ -65,7 +65,7 @@ Architecture: linux-any
 Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
 Description: Android ext4 utilities with sparse support
  Android images (.img) are typically ext4 filesystems in a special
- sparse file format come in a special format.
+ sparse file format.  These are tools to help make that format.
  .
  This package provides the utilities to deal with Android sparse ext4
  images.
