@@ -19,9 +19,9 @@ Package: android-tools-adb
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android Debug Bridge CLI tool
- Android Debug Bridge (adb) is a versatile tool lets you manage the
- state of an emulator instance or Android-powered device. It is a
- client-server program that includes three components:
+ Android Debug Bridge (adb) is a versatile tool that lets you manage the state
+ of an emulator instance or Android-powered device. It is a client-server
+ program that includes three components:
  .
  A client, which runs on your development machine. You can invoke a
  client from a shell by issuing an adb command. Other Android tools such
@@ -41,9 +41,9 @@ Package: android-tools-adbd
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android Debug Bridge daemon
- Android Debug Bridge (adb) is a versatile tool lets you manage the
- state of an emulator instance or Android-powered device. It is a
- client-server program that includes three components.
+ Android Debug Bridge (adb) is a versatile tool that lets you manage the state
+ of an emulator instance or Android-powered device. It is a client-server
+ program that includes three components.
  .
  This package provides the daemon, which runs as a background process
  on a device you want to connect to from a PC.
