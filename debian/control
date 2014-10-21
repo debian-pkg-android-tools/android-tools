@@ -18,7 +18,9 @@ Vcs-Git: https://anonscm.debian.org/git/android-tools/android-tools.git
 Vcs-Browser: http://anonscm.debian.org/cgit/android-tools/android-tools.git
 
 Package: android-tools-adb
-Architecture: any
+# requires porting of selinux calls in extras/ext4_utils and
+# core/fastboot/usb_*.c implementation; hurd
+Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Android Debug Bridge CLI tool
  Android Debug Bridge (adb) is a versatile tool that lets you manage the state
