@@ -6,3 +6,4 @@ env-props.patch
 byteswap-constants.patch
 adbd-use-user-shell.patch
 use-local-socket.patch
+ppc64el-ftbfs.patch
