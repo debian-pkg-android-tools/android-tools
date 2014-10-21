@@ -7,3 +7,4 @@ byteswap-constants.patch
 adbd-use-user-shell.patch
 use-local-socket.patch
 ppc64el-ftbfs.patch
+add-bq-vendor-id.patch
