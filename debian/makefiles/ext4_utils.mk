@@ -38,6 +38,7 @@ CPPFLAGS+= -I$(SRCDIR)/extras/ext4_utils
 CPPFLAGS+= -I/usr/include
 CPPFLAGS+= -I$(SRCDIR)/core/include
 CPPFLAGS+= -I$(SRCDIR)/core/libsparse/include
+CPPFLAGS+= -include /usr/include/android/arch/linux-x86/AndroidConfig.h
 
 LIBS+= -lz -lselinux
 

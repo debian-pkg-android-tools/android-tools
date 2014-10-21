@@ -38,11 +38,9 @@ SRCS+= zipfile.c
 
 CPPFLAGS+= -D_XOPEN_SOURCE -D_GNU_SOURCE
 CPPFLAGS+= -DADB_HOST=1
-CPPFLAGS+= -DHAVE_FORKEXEC=1
-CPPFLAGS+= -DHAVE_SYMLINKS
-CPPFLAGS+= -DHAVE_TERMIO_H
 CPPFLAGS+= -I$(SRCDIR)/core/adb
 CPPFLAGS+= -I$(SRCDIR)/core/include
+CPPFLAGS+= -include /usr/include/android/arch/linux-x86/AndroidConfig.h
 
 LIBS+= -lc -lpthread -lz -lcrypto
 

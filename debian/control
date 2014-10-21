@@ -6,6 +6,7 @@ Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.org>,
            Hans-Christoph Steiner <hans@eds.org>,
            Loïc Minier <lool@debian.org>
 Build-Depends: debhelper (>= 9),
+               android-system-dev,
                libcap-dev,
                libselinux-dev,
                libssl-dev,
