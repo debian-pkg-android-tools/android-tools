@@ -5,7 +5,7 @@ Source: https://android.googlesource.com/platform/system/core
 Files: *
 Copyright: 2006-2012, The Android Open Source Project
            2006, Brian Swetland <swetland@frotz.net>
-License: Apache 2.0
+License: Apache-2.0
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  .
@@ -21,7 +21,7 @@ License: Apache 2.0
 Files: debian/*
 Copyright: 2012, Linaro Ltd.
            2012, Laszlo Boszormenyi (GCS) <gcs@debian.hu>
-License: GPL v2
+License: GPL-2
  This program is free software; you can redistribute it
  and/or modify it under the terms of the GNU General Public
  License as published by the Free Software Foundation; either
@@ -141,13 +141,13 @@ Files: core/libcutils/private.h
        core/libcutils/tzfile.h
        core/libcutils/tztime.c
 Copyright: none
-License: public domain
+License: public-domain
  This file is in the public domain, so clarified as of              │
  1996-06-05 by Arthur David Olson.
 
 Files: core/libcutils/tzstrftime.c
 Copyright: 1989 The Regents of the University of California.
-License: Prior BSD License
+License: Prior-BSD-License
  Copyright (c) 1989 The Regents of the University of California.
  All rights reserved.
  .
@@ -166,14 +166,14 @@ License: Prior BSD License
 Files: extras/ext4_utils/sha1.c
        extras/ext4_utils/sha1.h
 Copyright: none
-License: public domain
+License: public-domain
  SHA-1 in C
  By Steve Reid <steve@edmweb.com>
  100% Public Domain
 
 Files: core/libsparse/sparse_crc32.c
 Copyright: none
-License: public domain
+License: public-domain
  COPYRIGHT (C) 1986 Gary S. Brown.  You may use this program, or
  code or tables extracted from it, as desired without restriction.
 
@@ -192,7 +192,7 @@ License: public domain
 Files: core/include/cutils/ashmem.h
        core/include/cutils/logger.h
 Copyright: 2006-2012, The Android Open Source Project
-License: Apache 2.0 or GPL v2
+License: Apache-2.0 or GPL-2
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  .
