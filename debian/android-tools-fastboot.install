@@ -1,1 +1,2 @@
 builddir/fastboot/fastboot usr/bin/
+debian/bash_completion.d/fastboot etc/bash_completion.d/
