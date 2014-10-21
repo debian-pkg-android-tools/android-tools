@@ -1,2 +1,1 @@
 builddir/adb/adb usr/bin/
-debian/bash_completion.d/adb etc/bash_completion.d/
