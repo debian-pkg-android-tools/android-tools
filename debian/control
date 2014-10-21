@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 9),
                libssl-dev,
                python,
                zlib1g-dev
-Standards-Version: 3.9.4
+Standards-Version: 3.9.6
 Homepage: http://developer.android.com/guide/developing/tools/adb.html
 Vcs-Git: https://anonscm.debian.org/git/android-tools/android-tools.git
 Vcs-Browser: http://anonscm.debian.org/cgit/android-tools/android-tools.git
