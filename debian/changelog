@@ -1,3 +1,9 @@
+android-tools (4.2.2+git20130529-5) unstable; urgency=low
+
+  * use system group 'adb' for udev rules (Closes: #766399)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Wed, 22 Oct 2014 19:43:35 -0400
+
 android-tools (4.2.2+git20130529-4) unstable; urgency=low
 
   [ Hans-Christoph Steiner ]
