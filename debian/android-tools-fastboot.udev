@@ -410,7 +410,7 @@ ATTR{idVendor}=="2717", ATTR{idProduct}=="0368", SYMLINK+="android_adb"
 LABEL="android_usb_rule_match"
 
 # Enable device as a user device if found
-ENV{adb_user}=="yes", MODE="0660", GROUP="adbusers", TAG+="uaccess", TAG+="udev-acl"
+ENV{adb_user}=="yes", MODE="0660", GROUP="adb", TAG+="uaccess", TAG+="udev-acl"
 
 # Devices listed here {begin...end} are connected by USB
 LABEL="android_usb_rules_end"
