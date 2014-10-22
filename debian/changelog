@@ -7,11 +7,12 @@ android-tools (4.2.2+git20130529-4) unstable; urgency=low
   * fix missing word in adb Description (Closes: #745358)
   * include AndroidConfig.h in builds (Closes: #700461)
   * include bash completion rules for adb and fastboot
+  * fix build failure on ppc64el
 
   [ Ramakrishnan Muthukrishnan ]
   * include man page for fastboot (Closes: #741967)
 
- -- Hans-Christoph Steiner <hans@eds.org>  Tue, 21 Oct 2014 12:22:15 -0400
+ -- Hans-Christoph Steiner <hans@eds.org>  Tue, 21 Oct 2014 22:39:19 -0400
 
 android-tools (4.2.2+git20130529-3) unstable; urgency=low
 
