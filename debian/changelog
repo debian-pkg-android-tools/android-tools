@@ -1,3 +1,10 @@
+android-tools (4.2.2+git20130529-5.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * add patch for CVE-2014-1909 (Closes: #770513)
+
+ -- Hilko Bengen <bengen@debian.org>  Mon, 24 Nov 2014 21:35:22 +0100
+
 android-tools (4.2.2+git20130529-5) unstable; urgency=low
 
   * use system group 'adb' for udev rules (Closes: #766399)
