@@ -6,6 +6,7 @@ SRCDIR ?= $(CURDIR)
 VPATH+= $(SRCDIR)/extras/ext4_utils
 SRCS+=make_ext4fs.c
 SRCS+=ext4fixup.c
+SRCS+=ext4_sb.c
 SRCS+=ext4_utils.c
 SRCS+=allocate.c
 SRCS+=contents.c
@@ -15,6 +16,7 @@ SRCS+=uuid.c
 SRCS+=sha1.c
 SRCS+=wipe.c
 SRCS+=crc16.c
+SRCS+=canned_fs_config.c
 
 VPATH+= $(SRCDIR)/core/libsparse
 SRCS+= backed_block.c

@@ -18,17 +18,14 @@ SRCS+= transport_local.c
 SRCS+= transport_usb.c
 SRCS+= usb_linux.c
 SRCS+= usb_vendors.c
-SRCS+= utils.c
 
 VPATH+= $(SRCDIR)/core/libcutils
-SRCS+= abort_socket.c
 SRCS+= socket_inaddr_any_server.c
 SRCS+= socket_local_client.c
 SRCS+= socket_local_server.c
 SRCS+= socket_loopback_client.c
 SRCS+= socket_loopback_server.c
 SRCS+= socket_network_client.c
-SRCS+= list.c
 SRCS+= load_file.c
 
 VPATH+= $(SRCDIR)/core/libzipfile

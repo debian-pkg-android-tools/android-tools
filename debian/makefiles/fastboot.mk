@@ -6,8 +6,10 @@ VPATH+= $(SRCDIR)/core/fastboot
 SRCS+= bootimg.c
 SRCS+= engine.c
 SRCS+= fastboot.c
+SRCS+= fs.c
 SRCS+= protocol.c
 SRCS+= usb_linux.c
+SRCS+= util.c
 SRCS+= util_linux.c
 
 VPATH+= $(SRCDIR)/core/libzipfile
@@ -25,6 +27,7 @@ SRCS+= output_file.c
 VPATH+= $(SRCDIR)/extras/ext4_utils
 SRCS+= make_ext4fs.c
 SRCS+= crc16.c
+SRCS+= ext4_sb.c
 SRCS+= ext4_utils.c
 SRCS+= indirect.c
 SRCS+= allocate.c
@@ -38,6 +41,7 @@ CPPFLAGS+= -I$(SRCDIR)/core/fastboot
 CPPFLAGS+= -I$(SRCDIR)/core/include
 CPPFLAGS+= -I$(SRCDIR)/core/mkbootimg
 CPPFLAGS+= -I$(SRCDIR)/extras/ext4_utils
+CPPFLAGS+= -I$(SRCDIR)/extras/f2fs_utils
 CPPFLAGS+= -I$(SRCDIR)/core/libsparse/include
 CPPFLAGS+= -include /usr/include/android/arch/linux-x86/AndroidConfig.h
 

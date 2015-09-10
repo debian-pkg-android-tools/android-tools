@@ -1,23 +1,21 @@
 ## Description: Let adb detect devices from BQ.
 ## Origin/Author: Jani Monoses <jani.monoses@canonical.com>
-Index: android-tools-4.2.2+git20130218/core/adb/usb_vendors.c
-===================================================================
---- android-tools-4.2.2+git20130218.orig/core/adb/usb_vendors.c
-+++ android-tools-4.2.2+git20130218/core/adb/usb_vendors.c
-@@ -143,6 +143,8 @@
- #define VENDOR_ID_BYD           0x19D1
- // OUYA's USB Vendor ID
- #define VENDOR_ID_OUYA          0x2836
+--- a/core/adb/usb_vendors.c
++++ b/core/adb/usb_vendors.c
+@@ -51,6 +51,8 @@
+ #define VENDOR_ID_ARCHOS        0x0E79
+ // Asus's USB Vendor ID
+ #define VENDOR_ID_ASUS          0x0b05
 +// BQ's USB Vendor ID
 +#define VENDOR_ID_BQ            0x2a47
- 
- 
- /** built-in vendor list */
-@@ -201,6 +203,7 @@ int builtInVendorIds[] = {
-     VENDOR_ID_XIAOMI,
-     VENDOR_ID_BYD,
-     VENDOR_ID_OUYA,
+ // BYD's USB Vendor ID
+ #define VENDOR_ID_BYD           0x1D91
+ // Compal's USB Vendor ID
+@@ -206,6 +208,7 @@
+     VENDOR_ID_ANYDATA,
+     VENDOR_ID_ARCHOS,
+     VENDOR_ID_ASUS,
 +    VENDOR_ID_BQ,
- };
- 
- #define BUILT_IN_VENDOR_COUNT    (sizeof(builtInVendorIds)/sizeof(builtInVendorIds[0]))
+     VENDOR_ID_BYD,
+     VENDOR_ID_COMPAL,
+     VENDOR_ID_COMPALCOMM,

@@ -5,11 +5,9 @@ Description: Fix build failure on ppc64el
  with android-tools' own definition of the type.  Use the
  __SANE_USERSPACE_TYPES__ define to get kernel header behavior consistent
  with other architectures.
-Index: android-tools-4.2.2+git20130218/extras/ext4_utils/ext4_utils.c
-===================================================================
---- android-tools-4.2.2+git20130218.orig/extras/ext4_utils/ext4_utils.c	2014-02-22 00:36:30.665154000 +0000
-+++ android-tools-4.2.2+git20130218/extras/ext4_utils/ext4_utils.c	2014-02-22 00:36:30.655154000 +0000
-@@ -36,6 +36,7 @@
+--- a/extras/ext4_utils/ext4_utils.c
++++ b/extras/ext4_utils/ext4_utils.c
+@@ -37,6 +37,7 @@
  #endif
  
  #if defined(__linux__)
@@ -17,10 +15,8 @@ Index: android-tools-4.2.2+git20130218/extras/ext4_utils/ext4_utils.c
  #include <linux/fs.h>
  #elif defined(__APPLE__) && defined(__MACH__)
  #include <sys/disk.h>
-Index: android-tools-4.2.2+git20130218/extras/ext4_utils/make_ext4fs_main.c
-===================================================================
---- android-tools-4.2.2+git20130218.orig/extras/ext4_utils/make_ext4fs_main.c	2014-02-14 18:26:17.000000000 +0000
-+++ android-tools-4.2.2+git20130218/extras/ext4_utils/make_ext4fs_main.c	2014-02-22 00:37:41.735153984 +0000
+--- a/extras/ext4_utils/make_ext4fs_main.c
++++ b/extras/ext4_utils/make_ext4fs_main.c
 @@ -20,6 +20,7 @@
  #include <unistd.h>
  
@@ -29,11 +25,18 @@ Index: android-tools-4.2.2+git20130218/extras/ext4_utils/make_ext4fs_main.c
  #include <linux/fs.h>
  #elif defined(__APPLE__) && defined(__MACH__)
  #include <sys/disk.h>
-Index: android-tools-4.2.2+git20130218/extras/ext4_utils/wipe.c
-===================================================================
---- android-tools-4.2.2+git20130218.orig/extras/ext4_utils/wipe.c	2013-02-18 14:49:03.000000000 +0000
-+++ android-tools-4.2.2+git20130218/extras/ext4_utils/wipe.c	2014-02-22 00:37:37.225155283 +0000
-@@ -19,6 +19,7 @@
+@@ -183,7 +184,7 @@
+ 		}
+ 		fs_config_func = canned_fs_config;
+ 	} else if (mountpoint) {
+-		fs_config_func = fs_config;
++    fs_config_func = fs_config;
+ 	}
+ 
+ 	if (wipe && sparse) {
+--- a/extras/ext4_utils/wipe.c
++++ b/extras/ext4_utils/wipe.c
+@@ -21,6 +21,7 @@
  
  #if defined(__linux__)
  
