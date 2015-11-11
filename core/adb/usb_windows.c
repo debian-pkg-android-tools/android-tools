@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
+#include <winsock2.h>
 #include <windows.h>
 #include <winerror.h>
 #include <errno.h>
 #include <usb100.h>
 #include <adb_api.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "sysdeps.h"
 
@@ -310,14 +312,14 @@ int usb_read(usb_handle *handle, void* data, int len) {
       int xfer = (len > 4096) ? 4096 : len;
 
       ret = AdbReadEndpointSync(handle->adb_read_pipe,
-                                  (void*)data,
+                                  data,
                                   (unsigned long)xfer,
                                   &read,
                                   time_out);
       int saved_errno = GetLastError();
       D("usb_write got: %ld, expected: %d, errno: %d\n", read, xfer, saved_errno);
       if (ret) {
-        data += read;
+        data = (char *)data + read;
         len -= read;
 
         if (len == 0)
