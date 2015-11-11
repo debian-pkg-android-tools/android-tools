@@ -23,6 +23,9 @@
 # depends: git, xz-utils (xz)
 # author: Loïc Minier <loic.minier@ubuntu.com>
 
+ANDROID_TAG="${ANDROID_TAG:-}"
+ANDROID_TAG_PATTERN="${ANDROID_TAG_PATTERN:-android-[0-9].*}"
+
 ANDROID_MIRROR="https://android.googlesource.com/"
 CORE_REPO="$ANDROID_MIRROR/platform/system/core"
 EXTRAS_REPO="$ANDROID_MIRROR/platform/system/extras"
@@ -77,36 +80,49 @@ trap "cleanup" 0 1 2 3 9 11 13 15
 work_dir="$(mktemp -dt "$self.XXXXXXXXXX")"
 
 git_latest_tag() {
-    git describe --abbrev=0
+    git for-each-ref --sort='-taggerdate' --format='%(refname:short)' --count=1 "refs/tags/$ANDROID_TAG_PATTERN"
 }
 
-git_abbrev() {
-    git log -1 --format=%h
+git_checkout_some_tag() {
+    cd "$1"
+    if [ -z "$ANDROID_TAG" ]; then
+        ANDROID_TAG=`git_latest_tag`
+    fi
+    if ! git checkout "$ANDROID_TAG"; then
+        log "E: failed to check out $ANDROID_TAG"
+        exit 1
+    else
+        log_i "$1: tag=`git describe`"
+        rm -rf ".git"
+        cd -
+    fi
 }
 
 # run from within the android-tools directory
 in_work_dir() {
     log_i "Cloning core..."
     git clone "$CORE_REPO"
+    git_checkout_some_tag core
     log_i "Cloning extras..."
     git clone "$EXTRAS_REPO"
+    git_checkout_some_tag extras
     log_i "Cloning libhardware..."
     git clone "$LIBHARDWARE_REPO"
-
-    for d in core extras libhardware; do
-        (cd "$d" && log_i "$d: abbrev=`git_abbrev` tag=`git_latest_tag`")
-        rm -rf "$d/.git"
-    done
+    git_checkout_some_tag libhardware
 
     log_i "Importing in git..."
     git init
     echo "$GITIGNORE" >.gitignore
     git add .
     git commit -m "Initial import"
+    log_i "Committed $ANDROID_TAG: core extras libhardware"
 }
 
-(cd "$work_dir" && in_work_dir)
+oldpwd="$PWD"
+cd "$work_dir" && in_work_dir
+cd "$oldpwd"
 
 log_i "Creating tarball..."
-GIT_DIR="$work_dir/.git" git archive --format=tar --prefix=android-tools/ HEAD | xz >android-tools.tar.xz
-
+FULLNAME="android-tools_${ANDROID_TAG#android-}"
+GIT_DIR="$work_dir/.git" git archive --format=tar \
+  --prefix="$FULLNAME/" HEAD | xz >"$FULLNAME.tar.xz"
