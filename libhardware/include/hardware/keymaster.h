@@ -33,11 +33,16 @@ __BEGIN_DECLS
 #define KEYSTORE_KEYMASTER "keymaster"
 
 /**
- * The API level of this version of the header. The allows the implementing
- * module to recognize which API level of the client it is dealing with in
- * the case of pre-compiled binary clients.
+ * Settings for "module_api_version" and "hal_api_version"
+ * fields in the keymaster_module initialization.
  */
-#define KEYMASTER_API_VERSION 1
+#define KEYMASTER_HEADER_VERSION 3
+
+#define KEYMASTER_MODULE_API_VERSION_0_2  HARDWARE_MODULE_API_VERSION(0, 2)
+#define KEYMASTER_DEVICE_API_VERSION_0_2  HARDWARE_DEVICE_API_VERSION_2(0, 2, KEYMASTER_HEADER_VERSION)
+
+#define KEYMASTER_MODULE_API_VERSION_0_3  HARDWARE_MODULE_API_VERSION(0, 3)
+#define KEYMASTER_DEVICE_API_VERSION_0_3  HARDWARE_DEVICE_API_VERSION_2(0, 3, KEYMASTER_HEADER_VERSION)
 
 /**
  * Flags for keymaster_device::flags
@@ -50,10 +55,40 @@ enum {
      * This should not be implemented on anything other than the default
      * implementation.
      */
-    KEYMASTER_SOFTWARE_ONLY = 0x00000001,
+    KEYMASTER_SOFTWARE_ONLY = 1 << 0,
+
+    /*
+     * This indicates that the key blobs returned via all the primitives
+     * are sufficient to operate on their own without the trusted OS
+     * querying userspace to retrieve some other data. Key blobs of
+     * this type are normally returned encrypted with a
+     * Key Encryption Key (KEK).
+     *
+     * This is currently used by "vold" to know whether the whole disk
+     * encryption secret can be unwrapped without having some external
+     * service started up beforehand since the "/data" partition will
+     * be unavailable at that point.
+     */
+    KEYMASTER_BLOBS_ARE_STANDALONE = 1 << 1,
+
+    /*
+     * Indicates that the keymaster module supports DSA keys.
+     */
+    KEYMASTER_SUPPORTS_DSA = 1 << 2,
+
+    /*
+     * Indicates that the keymaster module supports EC keys.
+     */
+    KEYMASTER_SUPPORTS_EC = 1 << 3,
 };
 
 struct keystore_module {
+    /**
+     * Common methods of the keystore module.  This *must* be the first member of
+     * keystore_module as users of this structure will cast a hw_module_t to
+     * keystore_module pointer in contexts where it's known the hw_module_t references a
+     * keystore_module.
+     */
     hw_module_t common;
 };
 
@@ -62,6 +97,8 @@ struct keystore_module {
  */
 typedef enum {
     TYPE_RSA = 1,
+    TYPE_DSA = 2,
+    TYPE_EC = 3,
 } keymaster_keypair_t;
 
 /**
@@ -73,11 +110,42 @@ typedef struct {
 } keymaster_rsa_keygen_params_t;
 
 /**
- * Digest type used for RSA operations.
+ * Parameters needed to generate a DSA key.
+ */
+typedef struct {
+    uint32_t key_size;
+    uint32_t generator_len;
+    uint32_t prime_p_len;
+    uint32_t prime_q_len;
+    const uint8_t* generator;
+    const uint8_t* prime_p;
+    const uint8_t* prime_q;
+} keymaster_dsa_keygen_params_t;
+
+/**
+ * Parameters needed to generate an EC key.
+ *
+ * Field size is the only parameter in version 2. The sizes correspond to these required curves:
+ *
+ * 192 = NIST P-192
+ * 224 = NIST P-224
+ * 256 = NIST P-256
+ * 384 = NIST P-384
+ * 521 = NIST P-521
+ *
+ * The parameters for these curves are available at: http://www.nsa.gov/ia/_files/nist-routines.pdf
+ * in Chapter 4.
+ */
+typedef struct {
+    uint32_t field_size;
+} keymaster_ec_keygen_params_t;
+
+/**
+ * Digest type.
  */
 typedef enum {
     DIGEST_NONE,
-} keymaster_rsa_digest_t;
+} keymaster_digest_t;
 
 /**
  * Type of padding used for RSA operations.
@@ -86,8 +154,17 @@ typedef enum {
     PADDING_NONE,
 } keymaster_rsa_padding_t;
 
+
 typedef struct {
-    keymaster_rsa_digest_t digest_type;
+    keymaster_digest_t digest_type;
+} keymaster_dsa_sign_params_t;
+
+typedef struct {
+    keymaster_digest_t digest_type;
+} keymaster_ec_sign_params_t;
+
+typedef struct {
+    keymaster_digest_t digest_type;
     keymaster_rsa_padding_t padding_type;
 } keymaster_rsa_sign_params_t;
 
@@ -95,8 +172,18 @@ typedef struct {
  * The parameters that can be set for a given keymaster implementation.
  */
 struct keymaster_device {
+    /**
+     * Common methods of the keymaster device.  This *must* be the first member of
+     * keymaster_device as users of this structure will cast a hw_device_t to
+     * keymaster_device pointer in contexts where it's known the hw_device_t references a
+     * keymaster_device.
+     */
     struct hw_device_t common;
 
+    /**
+     * THIS IS DEPRECATED. Use the new "module_api_version" and "hal_api_version"
+     * fields in the keymaster_module initialization instead.
+     */
     uint32_t client_version;
 
     /**
@@ -196,10 +283,6 @@ static inline int keymaster_open(const struct hw_module_t* module,
     int rc = module->methods->open(module, KEYSTORE_KEYMASTER,
             (struct hw_device_t**) device);
 
-    if (!rc) {
-        (*device)->client_version = KEYMASTER_API_VERSION;
-    }
-
     return rc;
 }
 
@@ -211,4 +294,3 @@ static inline int keymaster_close(keymaster_device_t* device)
 __END_DECLS
 
 #endif  // ANDROID_HARDWARE_KEYMASTER_H
-

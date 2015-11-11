@@ -14,38 +14,40 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include <sys/mount.h>
-#include <errno.h>
-
 #include "sysdeps.h"
+
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/mount.h>
+#include <unistd.h>
+
+#include "cutils/properties.h"
 
 #define  TRACE_TAG  TRACE_ADB
 #include "adb.h"
 
 
 static int system_ro = 1;
+static int vendor_ro = 1;
 
 /* Returns the device used to mount a directory in /proc/mounts */
 static char *find_mount(const char *dir)
 {
     int fd;
     int res;
-    int size;
     char *token = NULL;
     const char delims[] = "\n";
     char buf[4096];
 
-    fd = unix_open("/proc/mounts", O_RDONLY);
+    fd = unix_open("/proc/mounts", O_RDONLY | O_CLOEXEC);
     if (fd < 0)
         return NULL;
 
     buf[sizeof(buf) - 1] = '\0';
-    size = adb_read(fd, buf, sizeof(buf) - 1);
+    adb_read(fd, buf, sizeof(buf) - 1);
     adb_close(fd);
 
     token = strtok(buf, delims);
@@ -68,25 +70,43 @@ static char *find_mount(const char *dir)
     return NULL;
 }
 
+static int hasVendorPartition()
+{
+    struct stat info;
+    if (!lstat("/vendor", &info))
+        if ((info.st_mode & S_IFMT) == S_IFDIR)
+          return true;
+    return false;
+}
+
 /* Init mounts /system as read only, remount to enable writes. */
-static int remount_system()
+static int remount(const char* dir, int* dir_ro)
 {
     char *dev;
+    int fd;
+    int OFF = 0;
 
-    if (system_ro == 0) {
+    if (dir_ro == 0) {
         return 0;
     }
 
-    dev = find_mount("/system");
+    dev = find_mount(dir);
 
     if (!dev)
         return -1;
 
-    system_ro = mount(dev, "/system", "none", MS_REMOUNT, NULL);
+    fd = unix_open(dev, O_RDONLY | O_CLOEXEC);
+    if (fd < 0)
+        return -1;
+
+    ioctl(fd, BLKROSET, &OFF);
+    adb_close(fd);
+
+    *dir_ro = mount(dev, dir, "none", MS_REMOUNT, NULL);
 
     free(dev);
 
-    return system_ro;
+    return *dir_ro;
 }
 
 static void write_string(int fd, const char* str)
@@ -96,14 +116,53 @@ static void write_string(int fd, const char* str)
 
 void remount_service(int fd, void *cookie)
 {
-    int ret = remount_system();
+    char buffer[200];
+    char prop_buf[PROPERTY_VALUE_MAX];
 
-    if (!ret)
-       write_string(fd, "remount succeeded\n");
-    else {
-        char    buffer[200];
-        snprintf(buffer, sizeof(buffer), "remount failed: %s\n", strerror(errno));
+    bool system_verified = false, vendor_verified = false;
+    property_get("partition.system.verified", prop_buf, "0");
+    if (!strcmp(prop_buf, "1")) {
+        system_verified = true;
+    }
+
+    property_get("partition.vendor.verified", prop_buf, "0");
+    if (!strcmp(prop_buf, "1")) {
+        vendor_verified = true;
+    }
+
+    if (system_verified || vendor_verified) {
+        // Allow remount but warn of likely bad effects
+        bool both = system_verified && vendor_verified;
+        snprintf(buffer, sizeof(buffer),
+                 "dm_verity is enabled on the %s%s%s partition%s.\n",
+                 system_verified ? "system" : "",
+                 both ? " and " : "",
+                 vendor_verified ? "vendor" : "",
+                 both ? "s" : "");
         write_string(fd, buffer);
+        snprintf(buffer, sizeof(buffer),
+                 "Use \"adb disable-verity\" to disable verity.\n"
+                 "If you do not, remount may succeed, however, you will still "
+                 "not be able to write to these volumes.\n");
+        write_string(fd, buffer);
+    }
+
+    if (remount("/system", &system_ro)) {
+        snprintf(buffer, sizeof(buffer), "remount of system failed: %s\n",strerror(errno));
+        write_string(fd, buffer);
+    }
+
+    if (hasVendorPartition()) {
+        if (remount("/vendor", &vendor_ro)) {
+            snprintf(buffer, sizeof(buffer), "remount of vendor failed: %s\n",strerror(errno));
+            write_string(fd, buffer);
+        }
+    }
+
+    if (!system_ro && (!vendor_ro || !hasVendorPartition()))
+        write_string(fd, "remount succeeded\n");
+    else {
+        write_string(fd, "remount failed\n");
     }
 
     adb_close(fd);
