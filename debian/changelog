@@ -1,4 +1,4 @@
-android-tools (5.1.1.r29-1) UNRELEASED; urgency=medium
+android-tools (5.1.1.r29-1) unstable; urgency=medium
 
   [ Scott James Wakeling ]
   * Update Debian packaging to android 5.
@@ -9,7 +9,7 @@ android-tools (5.1.1.r29-1) UNRELEASED; urgency=medium
   * Mention `adb help` in man page. (Closes: #778975)
   * Fix documentation URLs. (Closes: #801363)
 
- -- Ximin Luo <infinity0@debian.org>  Thu, 12 Nov 2015 00:28:36 +0100
+ -- Ximin Luo <infinity0@debian.org>  Thu, 12 Nov 2015 02:50:28 +0100
 
 android-tools (4.2.2+git20130529-5.1) unstable; urgency=medium
 
