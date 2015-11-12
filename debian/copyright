@@ -6,42 +6,11 @@ Files: *
 Copyright: 2006-2012, The Android Open Source Project
            2006, Brian Swetland <swetland@frotz.net>
 License: Apache-2.0
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- .
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- .
- On Debian systems, the full text of the Apache License version 2 can be found
- in the file `/usr/share/common-licenses/Apache-2.0'.
 
 Files: debian/*
 Copyright: 2012, Linaro Ltd.
            2012, Laszlo Boszormenyi (GCS) <gcs@debian.hu>
 License: GPL-2
- This program is free software; you can redistribute it
- and/or modify it under the terms of the GNU General Public
- License as published by the Free Software Foundation; either
- version 2 of the License, or (at your option) any later
- version.
- .
- This program is distributed in the hope that it will be
- useful, but WITHOUT ANY WARRANTY; without even the implied
- warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.  See the GNU General Public License for more
- details.
- .
- You should have received a copy of the GNU General Public
- License along with this package; if not, write to the Free
- Software Foundation, Inc., 51 Franklin St, Fifth Floor,
- Boston, MA  02110-1301 USA
- .
- On Debian systems, the full text of the GNU General Public
- License version 2 can be found in the file
- `/usr/share/common-licenses/GPL-2'.
 
 Files: debian/*.udev
 Copyright: 2012-2014 M0Rf30 <morf3089@gmail.com>
@@ -83,6 +52,10 @@ License: MIT
  all copies or substantial portions of the Software.
 
 Files: core/fastboot/*
+       core/include/cutils/atomic-arm64.h
+       core/include/cutils/atomic-x86_64.h
+       core/include/utils/LinearAllocator.h
+       extras/f2fs_utils/f2fs_ioutils.c
 Copyright: 2008, The Android Open Source Project
            2007, Google Inc.
 License: BSD-2-clause
@@ -139,24 +112,27 @@ License: BSD-3-clause
 
 Files: extras/ext4_utils/sha1.c
        extras/ext4_utils/sha1.h
-Copyright: none
-License: public-domain
- SHA-1 in C
- By Steve Reid <steve@edmweb.com>
+Copyright: 1997 Steve Reid <steve@edmweb.com>
+License: none-sha1
  100% Public Domain
+Comment:
+ When copyright holders state "public domain", they generally mean to
+ grant all rights to the maximum extent allowed by law.
 
 Files: core/libsparse/sparse_crc32.c
-Copyright: none
-License: public-domain
- COPYRIGHT (C) 1986 Gary S. Brown.  You may use this program, or
- code or tables extracted from it, as desired without restriction.
+Copyright: 1986 Gary S. Brown
+License: none-crc32
+ You may use this program, or code or tables extracted from it, as
+ desired without restriction.
 
 Files: extras/ext4_utils/ext4_extents.h
        extras/ext4_utils/ext4.h
-       extras/ext4_utils/ext4_jbd2.h
        extras/ext4_utils/jbd2.h
 Copyright: none
 License: public-domain
+ These files contain no copyrightable content; see the Comment field
+ for justification.
+Comment:
  This header was automatically generated from a Linux kernel header
  of the same name, to make information necessary for userspace to
  call into the kernel available to libc.  It contains only constants,
@@ -164,9 +140,11 @@ License: public-domain
  contains no copyrightable information.
 
 Files: core/include/cutils/ashmem.h
-       core/include/cutils/logger.h
+       core/include/utils/ashmem.h
 Copyright: 2006-2012, The Android Open Source Project
 License: Apache-2.0 or GPL-2
+
+License: Apache-2.0
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  .
@@ -178,7 +156,8 @@ License: Apache-2.0 or GPL-2
  .
  On Debian systems, the full text of the Apache License version 2 can be found
  in the file `/usr/share/common-licenses/Apache-2.0'.
- .
+
+License: GPL-2
  This program is free software; you can redistribute it
  and/or modify it under the terms of the GNU General Public
  License as published by the Free Software Foundation; either
