@@ -4,7 +4,10 @@ android-tools (5.1.1.r29-1) UNRELEASED; urgency=medium
   * Update Debian packaging to android 5.
 
   [ Ximin Luo ]
-  * New upstream version. (Closes: #781332, #798305, #738119, #797273)
+  * New upstream version.
+    (Closes: #781332, #798305, #738119, #797273, #803485, #804097)
+  * Mention `adb help` in man page. (Closes: #778975)
+  * Fix documentation URLs. (Closes: #801363)
 
  -- Ximin Luo <infinity0@debian.org>  Thu, 12 Nov 2015 00:28:36 +0100
 

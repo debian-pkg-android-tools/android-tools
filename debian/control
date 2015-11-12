@@ -15,7 +15,7 @@ Build-Depends: debhelper (>= 9),
                zlib1g-dev,
                bash-completion
 Standards-Version: 3.9.6
-Homepage: http://developer.android.com/guide/developing/tools/adb.html
+Homepage: http://developer.android.com/tools/help/adb.html
 Vcs-Git: https://anonscm.debian.org/git/android-tools/android-tools.git
 Vcs-Browser: http://anonscm.debian.org/cgit/android-tools/android-tools.git
 
