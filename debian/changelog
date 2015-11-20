@@ -1,9 +1,9 @@
-android-tools (5.1.1.r29-2) UNRELEASED; urgency=medium
+android-tools (5.1.1.r29-2) unstable; urgency=medium
 
   * Remove obsolete bash-completion files from older packages.
     (Closes: #805604)
 
- -- Ximin Luo <infinity0@debian.org>  Sat, 21 Nov 2015 00:35:42 +0100
+ -- Ximin Luo <infinity0@debian.org>  Sat, 21 Nov 2015 00:49:23 +0100
 
 android-tools (5.1.1.r29-1) unstable; urgency=medium
 
