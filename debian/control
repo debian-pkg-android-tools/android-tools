@@ -7,6 +7,7 @@ Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.org>,
            Loïc Minier <lool@debian.org>,
            Ximin Luo <infinity0@debian.org>
 Build-Depends: debhelper (>= 9),
+               dh-python,
                android-system-dev,
                libcap-dev,
                libselinux-dev,
