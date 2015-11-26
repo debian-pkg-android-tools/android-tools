@@ -1,4 +1,4 @@
-# Makefile for adb; from https://heiher.info/2227.html
+# Makefile for adb
 
 SRCDIR ?= $(CURDIR)
 
@@ -28,18 +28,14 @@ SRCS+= socket_loopback_server.c
 SRCS+= socket_network_client.c
 SRCS+= load_file.c
 
-VPATH+= $(SRCDIR)/core/libzipfile
-SRCS+= centraldir.c
-SRCS+= zipfile.c
-
-
+CPPFLAGS+= -std=gnu11
 CPPFLAGS+= -D_XOPEN_SOURCE -D_GNU_SOURCE
 CPPFLAGS+= -DADB_HOST=1
 CPPFLAGS+= -I$(SRCDIR)/core/adb
 CPPFLAGS+= -I$(SRCDIR)/core/include
-CPPFLAGS+= -include /usr/include/android/arch/linux-x86/AndroidConfig.h
+CPPFLAGS+= -include /usr/include/android/arch/$(android_arch)/AndroidConfig.h
 
-LIBS+= -lc -lpthread -lz -lcrypto
+LIBS+= -lc -lpthread -lcrypto
 
 OBJS= $(SRCS:.c=.o)
 

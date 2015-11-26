@@ -17,6 +17,10 @@ android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
       Qualcomm devices boot image. Add --dt argument to allow this feature.
   * Update debian/control: Build-Depends on libselinux1-dev instead of the
     virtual libselinux-dev package.
+  * Update debian/rules: map Debian Host architectures to Android
+    architectures, used to include the architecture specific AndroidConfig.h
+  * Clean up debian/makefiles/*.mk files and build with -std=gnu11 to fix
+    build failure with GCC 4.9 on Jessie (default in GCC from 5.x)
 
  -- Fathi Boudra <fabo@debian.org>  Thu, 26 Nov 2015 16:53:19 +0200
 

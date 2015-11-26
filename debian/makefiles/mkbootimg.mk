@@ -11,6 +11,7 @@ SRCS+= sha.c
 CPPFLAGS+= -std=gnu11
 CPPFLAGS+= -I$(SRCDIR)/core/mkbootimg
 CPPFLAGS+= -I$(SRCDIR)/core/include
+CPPFLAGS+= -include /usr/include/android/arch/$(android_arch)/AndroidConfig.h
 
 LIBS+= -lc
 

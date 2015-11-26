@@ -1,5 +1,4 @@
-# Makefile for ext4_utils; based on https://heiher.info/2227.html
-# Author: Dmitrijs Ledkovs <xnox@ubuntu.com>
+# Makefile for ext4_utils
 
 SRCDIR ?= $(CURDIR)
 
@@ -36,11 +35,11 @@ SRCS+=img2simg.c
 SRCS+=simg2img.c
 SRCS+=simg2simg.c
 
+CPPFLAGS+= -std=gnu11
 CPPFLAGS+= -I$(SRCDIR)/extras/ext4_utils
-CPPFLAGS+= -I/usr/include
 CPPFLAGS+= -I$(SRCDIR)/core/include
 CPPFLAGS+= -I$(SRCDIR)/core/libsparse/include
-CPPFLAGS+= -include /usr/include/android/arch/linux-x86/AndroidConfig.h
+CPPFLAGS+= -include /usr/include/android/arch/$(android_arch)/AndroidConfig.h
 
 LIBS+= -lz -lselinux
 

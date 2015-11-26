@@ -1,4 +1,4 @@
-# Makefile for fastboot; from https://heiher.info/2227.html
+# Makefile for fastboot
 
 SRCDIR ?= $(CURDIR)
 
@@ -37,13 +37,14 @@ SRCS+= extent.c
 SRCS+= wipe.c
 SRCS+= sha1.c
 
+CPPFLAGS+= -std=gnu11
 CPPFLAGS+= -I$(SRCDIR)/core/fastboot
 CPPFLAGS+= -I$(SRCDIR)/core/include
 CPPFLAGS+= -I$(SRCDIR)/core/mkbootimg
 CPPFLAGS+= -I$(SRCDIR)/extras/ext4_utils
 CPPFLAGS+= -I$(SRCDIR)/extras/f2fs_utils
 CPPFLAGS+= -I$(SRCDIR)/core/libsparse/include
-CPPFLAGS+= -include /usr/include/android/arch/linux-x86/AndroidConfig.h
+CPPFLAGS+= -include /usr/include/android/arch/$(android_arch)/AndroidConfig.h
 
 LIBS+= -lz -lselinux
 
