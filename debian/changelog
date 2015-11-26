@@ -11,6 +11,8 @@ android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
   * Add patches:
     - fix-implicit-pointer-conversion.patch - fix an implicit pointer
       conversion.
+    - preserve-ownership.patch - make_ext4fs doesn't preserve user/group
+      ownership. Add -o argument to allow this feature.
 
  -- Fathi Boudra <fabo@debian.org>  Thu, 26 Nov 2015 16:53:19 +0200
 
