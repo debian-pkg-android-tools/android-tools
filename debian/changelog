@@ -1,6 +1,13 @@
 android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
 
   * Add myself to Uploaders field.
+  * Add android-tools-mkbootimg package:
+    - add debian/makefiles/mkbootimg.img
+    - add debian/android-tools-mkbootimg.install
+    - debian/control: add android-tools-mkbootimg package
+    - debian/create-snapshot: add core/libmincrypt to gitignore, used to build
+      mkbootimg.
+    - debian/rules: build mkbootimg
 
  -- Fathi Boudra <fabo@debian.org>  Thu, 26 Nov 2015 16:53:19 +0200
 

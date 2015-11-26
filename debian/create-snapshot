@@ -43,6 +43,7 @@ GITIGNORE="
 !/core/include/utils/
 !/core/include/zipfile/
 !/core/libcutils/
+!/core/libmincrypt/
 !/core/libzipfile/
 !/core/libsparse/
 !/core/libsparse/include/

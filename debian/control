@@ -60,3 +60,12 @@ Description: Android ext4 utilities with sparse support
  .
  This package provides the utilities to deal with Android sparse ext4
  images.
+
+Package: android-tools-mkbootimg
+Architecture: linux-any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Android tool to create Android boot images
+ Creates Android boot images that includes kernel image and ramdisk, in a
+ special format which can be used with fastboot.
+ .
+ This package provides the mkbootimg command-line tool.
