@@ -5,7 +5,8 @@ Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.o
 Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.org>,
            Hans-Christoph Steiner <hans@eds.org>,
            Loïc Minier <lool@debian.org>,
-           Ximin Luo <infinity0@debian.org>
+           Ximin Luo <infinity0@debian.org>,
+           Fathi Boudra <fabo@debian.org>
 Build-Depends: debhelper (>= 9),
                dh-python,
                android-system-dev,

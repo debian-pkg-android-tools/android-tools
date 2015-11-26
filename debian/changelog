@@ -1,3 +1,9 @@
+android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
+
+  * Add myself to Uploaders field.
+
+ -- Fathi Boudra <fabo@debian.org>  Thu, 26 Nov 2015 16:53:19 +0200
+
 android-tools (5.1.1.r29-2) unstable; urgency=medium
 
   * Remove obsolete bash-completion files from older packages.
