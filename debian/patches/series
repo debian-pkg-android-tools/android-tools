@@ -4,3 +4,4 @@ use-capability.patch
 use-local-socket.patch
 ppc64el-ftbfs.patch
 remove-fs-config-android.patch
+fix-implicit-pointer-conversion.patch

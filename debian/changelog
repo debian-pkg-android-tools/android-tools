@@ -8,6 +8,9 @@ android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
     - debian/create-snapshot: add core/libmincrypt to gitignore, used to build
       mkbootimg.
     - debian/rules: build mkbootimg
+  * Add patches:
+    - fix-implicit-pointer-conversion.patch - fix an implicit pointer
+      conversion.
 
  -- Fathi Boudra <fabo@debian.org>  Thu, 26 Nov 2015 16:53:19 +0200
 
