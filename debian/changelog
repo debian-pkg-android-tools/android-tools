@@ -8,6 +8,12 @@ android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
     - debian/create-snapshot: add core/libmincrypt to gitignore, used to build
       mkbootimg.
     - debian/rules: build mkbootimg
+  * Add android-tools-adbd package:
+    - add debian/makefiles/adbd.mk
+    - add debian/android-tools-adbd.install
+    - debian/control: add android-tools-adbd package
+    - debian/create-snapshot: add core/fs_mgr and core/liblog to gitignore,
+      used to build adbd
   * Add patches:
     - fix-implicit-pointer-conversion.patch - fix an implicit pointer
       conversion.
@@ -15,6 +21,9 @@ android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
       ownership. Add -o argument to allow this feature.
     - mkbootimg-Add-dt-parameter-to-specify-DT-image.patch - support
       Qualcomm devices boot image. Add --dt argument to allow this feature.
+    - remove-bionic-android.patch - remove bionic specific calls like gettid()
+    - define-shell-command.patch - set the shell to "/bin/sh" as we intend to
+      run the daemon on Linux, host or target.
   * Update debian/control: Build-Depends on libselinux1-dev instead of the
     virtual libselinux-dev package.
   * Update debian/rules: map Debian Host architectures to Android

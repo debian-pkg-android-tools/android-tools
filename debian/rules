@@ -45,6 +45,10 @@ override_dh_auto_build:
 	$(MAKE) -f $(M)/ext4_utils.mk -C builddir/ext4_utils
 	mkdir -p builddir/mkbootimg
 	$(MAKE) -f $(M)/mkbootimg.mk -C builddir/mkbootimg
+ifeq (,$(filter $(DEB_HOST_ARCH),powerpc))
+	mkdir -p builddir/adbd
+	$(MAKE) -f $(M)/adbd.mk -C builddir/adbd
+endif
 
 override_dh_install:
 	dh_install
@@ -53,4 +57,3 @@ override_dh_install:
 
 override_dh_installudev:
 	dh_installudev --priority=70
-

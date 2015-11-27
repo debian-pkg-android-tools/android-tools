@@ -7,3 +7,5 @@ remove-fs-config-android.patch
 fix-implicit-pointer-conversion.patch
 preserve-ownership.patch
 mkbootimg-Add-dt-parameter-to-specify-DT-image.patch
+remove-bionic-android.patch
+define-shell-command.patch

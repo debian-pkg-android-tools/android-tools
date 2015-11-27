@@ -1,0 +1,40 @@
+Description: remove bionic specific calls
+Author: Fathi Boudra <fabo@debian.org>
+
+---
+ core/include/cutils/properties.h |    1 -
+ core/liblog/logd_write.c         |    5 +++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+--- a/core/include/cutils/properties.h
++++ b/core/include/cutils/properties.h
+@@ -19,7 +19,6 @@
+ 
+ #include <sys/cdefs.h>
+ #include <stddef.h>
+-#include <sys/system_properties.h>
+ #include <stdint.h>
+ 
+ #ifdef __cplusplus
+--- a/core/liblog/logd_write.c
++++ b/core/liblog/logd_write.c
+@@ -23,6 +23,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/stat.h>
++#include <sys/syscall.h>
+ #include <sys/types.h>
+ #if (FAKE_LOG_DEVICE == 0)
+ #include <sys/socket.h>
+@@ -205,7 +206,11 @@ static int __write_to_log_kernel(log_id_
+     realtime_ts.tv_nsec = ts.tv_nsec;
+ 
+     log_id_buf = log_id;
++#ifdef __BIONIC__
+     tid = gettid();
++#else
++    tid = (pid_t) syscall(SYS_gettid);
++#endif
+ 
+     newVec[0].iov_base   = (unsigned char *) &log_id_buf;
+     newVec[0].iov_len    = sizeof_log_id_t;
