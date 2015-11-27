@@ -3,8 +3,9 @@ Author: Fathi Boudra <fabo@debian.org>
 
 ---
  core/include/cutils/properties.h |    1 -
+ core/libcutils/properties.c      |    2 +-
  core/liblog/logd_write.c         |    5 +++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
 --- a/core/include/cutils/properties.h
 +++ b/core/include/cutils/properties.h
@@ -38,3 +39,17 @@ Author: Fathi Boudra <fabo@debian.org>
  
      newVec[0].iov_base   = (unsigned char *) &log_id_buf;
      newVec[0].iov_len    = sizeof_log_id_t;
+--- a/core/libcutils/properties.c
++++ b/core/libcutils/properties.c
+@@ -104,10 +104,10 @@ int32_t property_get_int32(const char *k
+     return (int32_t)property_get_imax(key, INT32_MIN, INT32_MAX, default_value);
+ }
+ 
++#undef HAVE_LIBC_SYSTEM_PROPERTIES
+ #ifdef HAVE_LIBC_SYSTEM_PROPERTIES
+ 
+ #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
+-#include <sys/_system_properties.h>
+ 
+ int property_set(const char *key, const char *value)
+ {
