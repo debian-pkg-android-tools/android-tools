@@ -9,3 +9,4 @@ preserve-ownership.patch
 mkbootimg-Add-dt-parameter-to-specify-DT-image.patch
 remove-bionic-android.patch
 define-shell-command.patch
+fix-implicit-declaration-function.patch

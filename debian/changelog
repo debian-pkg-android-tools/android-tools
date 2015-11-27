@@ -24,6 +24,8 @@ android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
     - remove-bionic-android.patch - remove bionic specific calls like gettid()
     - define-shell-command.patch - set the shell to "/bin/sh" as we intend to
       run the daemon on Linux, host or target.
+    - fix-implicit-declaration-function.patch - fix implicit declaration by
+      adding a few includes.
   * Update debian/control: Build-Depends on libselinux1-dev instead of the
     virtual libselinux-dev package.
   * Update debian/rules: map Debian Host architectures to Android
