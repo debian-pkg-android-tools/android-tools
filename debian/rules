@@ -26,17 +26,17 @@ ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(linux_x86)))
 endif
 
 %:
-	dh $@ --with python2 --with bash-completion
+	dh $@ --with python2
 
 override_dh_clean:
 	dh_clean
 	rm -rf builddir/
 
 override_dh_auto_build:
-	mkdir -p builddir/adb
-	$(MAKE) -f $(M)/adb.mk -C builddir/adb
-	mkdir -p builddir/fastboot
-	$(MAKE) -f $(M)/fastboot.mk -C builddir/fastboot
+# 	mkdir -p builddir/adb
+# 	$(MAKE) -f $(M)/adb.mk -C builddir/adb
+# 	mkdir -p builddir/fastboot
+# 	$(MAKE) -f $(M)/fastboot.mk -C builddir/fastboot
 	mkdir -p builddir/ext4_utils
 	$(MAKE) -f $(M)/ext4_utils.mk -C builddir/ext4_utils
 	mkdir -p builddir/mkbootimg
