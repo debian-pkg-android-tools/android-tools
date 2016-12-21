@@ -9,13 +9,12 @@ Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.org>,
            Fathi Boudra <fabo@debian.org>
 Build-Depends: debhelper (>= 9),
                dh-python,
-               android-system-dev,
+               libbsd-dev,
                libcap-dev,
-               libselinux1-dev,
+               libpcre3-dev,
                libssl-dev,
                python,
-               zlib1g-dev,
-               bash-completion
+               zlib1g-dev
 Standards-Version: 3.9.6
 Homepage: https://developer.android.com/tools/help/adb.html
 Vcs-Git: https://anonscm.debian.org/git/android-tools/android-tools.git

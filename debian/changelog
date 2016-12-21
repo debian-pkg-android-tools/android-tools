@@ -29,8 +29,11 @@ android-tools (5.1.1.r38-1) UNRELEASED; urgency=medium
       adding a few includes.
     - adb_libssl_11.diff and adb_libssl_bc.diff - add support OpenSSL 1.1 API
       changes.
-  * Update debian/control: Build-Depends on libselinux1-dev instead of the
-    virtual libselinux-dev package.
+  * Update debian/control:
+    - Drop libselinux build dependency in favor of in-tree external/libselinux/.
+    - drop android-system-dev obsolete build dependency. We use in-tree
+      AndroidConfig.h from AOSP build repository. (Closes: #814600, #831254)
+    - add libbsd-dev and libpcre3-dev build dependencies
   * Update debian/rules: map Debian Host architectures to Android
     architectures, used to include the architecture specific AndroidConfig.h
   * Clean up debian/makefiles/*.mk files and build with -std=gnu11 to fix
