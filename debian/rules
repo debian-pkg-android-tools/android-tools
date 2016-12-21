@@ -20,10 +20,6 @@ linux_mips := mips mipsel
 ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(linux_mips)))
 	export android_arch := linux-mips
 endif
-linux_ppc := powerpc ppc64el
-ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(linux_ppc)))
-	export android_arch := linux-ppc
-endif
 linux_x86 := amd64 i386
 ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(linux_x86)))
 	export android_arch := linux-x86
