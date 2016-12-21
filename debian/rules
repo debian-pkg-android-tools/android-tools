@@ -48,8 +48,8 @@ endif
 
 override_dh_install:
 	dh_install
-	$(INSTALL_PROGRAM) core/libsparse/simg_dump.py debian/android-tools-fsutils/usr/bin/simg_dump
-	$(INSTALL_PROGRAM) extras/ext4_utils/mkuserimg.sh debian/android-tools-fsutils/usr/bin/mkuserimg
+	$(INSTALL_PROGRAM) system/core/libsparse/simg_dump.py debian/android-tools-fsutils/usr/bin/simg_dump
+	$(INSTALL_PROGRAM) system/extras/ext4_utils/mkuserimg.sh debian/android-tools-fsutils/usr/bin/mkuserimg
 
 override_dh_installudev:
 	dh_installudev --priority=70
