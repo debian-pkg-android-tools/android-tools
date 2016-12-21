@@ -32,8 +32,11 @@ android-tools (5.1.1.r29-3) UNRELEASED; urgency=medium
     architectures, used to include the architecture specific AndroidConfig.h
   * Clean up debian/makefiles/*.mk files and build with -std=gnu11 to fix
     build failure with GCC 4.9 on Jessie (default in GCC from 5.x).
+  * Update debian/create-snapshot:
+    - add libselinux and build repositories
+    - adjust .gitignore accordingly
 
- -- Fathi Boudra <fabo@debian.org>  Thu, 26 Nov 2015 16:53:19 +0200
+ -- Fathi Boudra <fabo@debian.org>  Tue, 20 Dec 2016 18:52:02 +0200
 
 android-tools (5.1.1.r29-2) unstable; urgency=medium
 

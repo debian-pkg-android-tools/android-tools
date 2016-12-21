@@ -27,43 +27,70 @@ ANDROID_TAG="${ANDROID_TAG:-}"
 ANDROID_TAG_PATTERN="${ANDROID_TAG_PATTERN:-android-[0-9].*}"
 
 ANDROID_MIRROR="https://android.googlesource.com/"
-CORE_REPO="$ANDROID_MIRROR/platform/system/core"
-EXTRAS_REPO="$ANDROID_MIRROR/platform/system/extras"
-LIBHARDWARE_REPO="$ANDROID_MIRROR/platform/hardware/libhardware"
+CORE_REPO="${ANDROID_MIRROR}/platform/system/core"
+EXTRAS_REPO="${ANDROID_MIRROR}/platform/system/extras"
+LIBHARDWARE_REPO="${ANDROID_MIRROR}/platform/hardware/libhardware"
+LIBSELINUX_REPO="${ANDROID_MIRROR}/platform/external/libselinux"
+BUILD_REPO="${ANDROID_MIRROR}/platform/build"
 GITIGNORE="
 *
+!.gitignore
+!*.indirectionsymlink
 !*.[ch]
-!/core/
-!/core/adb/
-!/core/fastboot/
-!/core/fs_mgr/
-!/core/fs_mgr/include/
-!/core/include/
-!/core/include/android/
-!/core/include/cutils/
-!/core/include/log/
-!/core/include/mincrypt/
-!/core/include/private/
-!/core/include/utils/
-!/core/include/zipfile/
-!/core/liblog/
-!/core/liblog/tests/
-!/core/libcutils/
-!/core/libmincrypt/
-!/core/libzipfile/
-!/core/libsparse/
-!/core/libsparse/include/
-!/core/libsparse/include/sparse/
-!/core/libsparse/simg_dump.py
-!/core/mkbootimg/
-!/extras/
-!/extras/ext4_utils/
-!/extras/ext4_utils/mkuserimg.sh
-!/extras/ext4_utils/test_ext4fixup
-!/extras/f2fs_utils/
-!/libhardware/
-!/libhardware/include/
-!/libhardware/include/hardware/
+!*.mk
+!NOTICE
+!MODULE_LICENSE_*
+!/system/
+!/system/core/
+!/system/core/adb/
+!/system/core/fastboot/
+!/system/core/fs_mgr/
+!/system/core/fs_mgr/include/
+!/system/core/include/
+!/system/core/include/android/
+!/system/core/include/cutils/
+!/system/core/include/log/
+!/system/core/include/mincrypt/
+!/system/core/include/private/
+!/system/core/include/utils/
+!/system/core/include/zipfile/
+!/system/core/liblog/
+!/system/core/liblog/tests/
+!/system/core/libcutils/
+!/system/core/libmincrypt/
+!/system/core/libzipfile/
+!/system/core/libsparse/
+!/system/core/libsparse/include/
+!/system/core/libsparse/include/sparse/
+!/system/core/libsparse/simg_dump.py
+!/system/core/mkbootimg/
+!/system/core/mkbootimg/mkbootimg
+!/system/extras/
+!/system/extras/ext4_utils/
+!/system/extras/ext4_utils/mkuserimg.sh
+!/system/extras/ext4_utils/test_ext4fixup
+!/system/extras/f2fs_utils/
+!/hardware/
+!/hardware/libhardware/
+!/hardware/libhardware/include/
+!/hardware/libhardware/include/hardware/
+!/external/
+!/external/libselinux/
+!/external/libselinux/include/
+!/external/libselinux/include/selinux/
+!/external/libselinux/src/
+!/external/f2fs-tools/
+!/external/f2fs-tools/include/
+!/external/f2fs-tools/lib/
+!/external/f2fs-tools/mkfs/
+!/build/
+!/build/core/
+!/build/core/version_defaults.mk
+!/build/core/combo/
+!/build/core/combo/include/
+!/build/core/combo/include/arch/
+!/build/core/combo/include/arch/linux-*/
+!/build/core/combo/include/arch/linux-*/AndroidConfig.h
 "
 
 self="$(basename "$0")"
@@ -109,15 +136,22 @@ git_checkout_some_tag() {
 
 # run from within the android-tools directory
 in_work_dir() {
+    mkdir -p system hardware external
     log_i "Cloning core..."
-    git clone "$CORE_REPO"
-    git_checkout_some_tag core
+    git clone "$CORE_REPO" system/core
+    git_checkout_some_tag system/core
     log_i "Cloning extras..."
-    git clone "$EXTRAS_REPO"
-    git_checkout_some_tag extras
+    git clone "$EXTRAS_REPO" system/extras
+    git_checkout_some_tag system/extras
     log_i "Cloning libhardware..."
-    git clone "$LIBHARDWARE_REPO"
-    git_checkout_some_tag libhardware
+    git clone "$LIBHARDWARE_REPO" hardware/libhardware
+    git_checkout_some_tag hardware/libhardware
+    log_i "Cloning libselinux..."
+    git clone "$LIBSELINUX_REPO" external/libselinux
+    git_checkout_some_tag external/libselinux
+    log_i "Cloning build..."
+    git clone "$BUILD_REPO"
+    git_checkout_some_tag build
 
     log_i "Importing in git..."
     git init
