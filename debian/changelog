@@ -36,6 +36,10 @@ android-tools (5.1.1.r38-1) UNRELEASED; urgency=medium
   * Update debian/create-snapshot:
     - add libselinux and build repositories
     - adjust .gitignore accordingly
+  * Update debian/makefiles:
+    - use in-tree AndroidConfig.h since it isn't provided by android-system-dev
+      package anymore.
+    - add -DANDROID to ext4_utils.mk (Closes: #741510)
 
  -- Fathi Boudra <fabo@debian.org>  Tue, 20 Dec 2016 18:52:02 +0200
 

@@ -2,25 +2,29 @@
 
 SRCDIR ?= $(CURDIR)
 
-VPATH+= $(SRCDIR)/core/mkbootimg
-SRCS+= mkbootimg.c
+VPATH += $(SRCDIR)/system/core/mkbootimg
+mkbootimg_SRC_FILES += mkbootimg.c
+mkbootimg_OBJS := $(mkbootimg_SRC_FILES:.c=.o)
 
-VPATH+= $(SRCDIR)/core/libmincrypt
-SRCS+= sha.c
+VPATH += $(SRCDIR)/system/core/libmincrypt
+libmincrypt_SRC_FILES := dsa_sig.c p256.c p256_ec.c p256_ecdsa.c rsa.c sha.c sha256.c
+libmincrypt_OBJS := $(libmincrypt_SRC_FILES:.c=.o)
 
-CPPFLAGS+= -std=gnu11
-CPPFLAGS+= -I$(SRCDIR)/core/mkbootimg
-CPPFLAGS+= -I$(SRCDIR)/core/include
-CPPFLAGS+= -include /usr/include/android/arch/$(android_arch)/AndroidConfig.h
+CFLAGS += -std=gnu11
+CFLAGS += -DANDROID
+CFLAGS += -I$(SRCDIR)/system/core/mkbootimg
+CFLAGS += -I$(SRCDIR)/system/core/include
+CFLAGS += -include $(SRCDIR)/build/core/combo/include/arch/$(android_arch)/AndroidConfig.h
 
-LIBS+= -lc
-
-OBJS= $(SRCS:.c=.o)
+LIBS += libmincrypt.a
 
 all: mkbootimg
 
-mkbootimg: $(OBJS)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
+mkbootimg: libmincrypt.a $(mkbootimg_OBJS)
+	$(CC) -o $@ $(LDFLAGS) $(mkbootimg_OBJS) $(LIBS)
+
+libmincrypt.a: $(libmincrypt_OBJS)
+	$(AR) rcs $@ $(libmincrypt_OBJS)
 
 clean:
-	rm -rf $(OBJS) mkbootimg
+	$(RM) $(mkbootimg_OBJS) $(libmincrypt_OBJS) mkbootimg *.a
