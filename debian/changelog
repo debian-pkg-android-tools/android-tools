@@ -27,6 +27,8 @@ android-tools (5.1.1.r38-1) UNRELEASED; urgency=medium
       run the daemon on Linux, host or target.
     - fix-implicit-declaration-function.patch - fix implicit declaration by
       adding a few includes.
+    - adb_libssl_11.diff and adb_libssl_bc.diff - add support OpenSSL 1.1 API
+      changes.
   * Update debian/control: Build-Depends on libselinux1-dev instead of the
     virtual libselinux-dev package.
   * Update debian/rules: map Debian Host architectures to Android

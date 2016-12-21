@@ -10,3 +10,5 @@ mkbootimg-Add-dt-parameter-to-specify-DT-image.patch
 remove-bionic-android.patch
 define-shell-command.patch
 fix-implicit-declaration-function.patch
+adb_libssl_11.diff
+adb_libssl_bc.diff
