@@ -5,8 +5,14 @@ Description: Fix build failure on ppc64el
  with android-tools' own definition of the type.  Use the
  __SANE_USERSPACE_TYPES__ define to get kernel header behavior consistent
  with other architectures.
---- a/extras/ext4_utils/ext4_utils.c
-+++ b/extras/ext4_utils/ext4_utils.c
+---
+ system/extras/ext4_utils/ext4_utils.c       |    1 +
+ system/extras/ext4_utils/make_ext4fs_main.c |    3 ++-
+ system/extras/ext4_utils/wipe.c             |    1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
+
+--- a/system/extras/ext4_utils/ext4_utils.c
++++ b/system/extras/ext4_utils/ext4_utils.c
 @@ -37,6 +37,7 @@
  #endif
  
@@ -15,8 +21,8 @@ Description: Fix build failure on ppc64el
  #include <linux/fs.h>
  #elif defined(__APPLE__) && defined(__MACH__)
  #include <sys/disk.h>
---- a/extras/ext4_utils/make_ext4fs_main.c
-+++ b/extras/ext4_utils/make_ext4fs_main.c
+--- a/system/extras/ext4_utils/make_ext4fs_main.c
++++ b/system/extras/ext4_utils/make_ext4fs_main.c
 @@ -20,6 +20,7 @@
  #include <unistd.h>
  
@@ -25,7 +31,7 @@ Description: Fix build failure on ppc64el
  #include <linux/fs.h>
  #elif defined(__APPLE__) && defined(__MACH__)
  #include <sys/disk.h>
-@@ -183,7 +184,7 @@
+@@ -183,7 +184,7 @@ int main(int argc, char **argv)
  		}
  		fs_config_func = canned_fs_config;
  	} else if (mountpoint) {
@@ -34,8 +40,8 @@ Description: Fix build failure on ppc64el
  	}
  
  	if (wipe && sparse) {
---- a/extras/ext4_utils/wipe.c
-+++ b/extras/ext4_utils/wipe.c
+--- a/system/extras/ext4_utils/wipe.c
++++ b/system/extras/ext4_utils/wipe.c
 @@ -21,6 +21,7 @@
  
  #if defined(__linux__)

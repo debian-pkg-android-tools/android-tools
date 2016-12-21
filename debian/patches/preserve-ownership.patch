@@ -4,15 +4,15 @@ Author: Markus Mayer <mmayer@mmayer.net>
 See also https://android-review.googlesource.com/#/c/100312/
 
 ---
- extras/ext4_utils/make_ext4fs.c      |    6 ++++++
- extras/ext4_utils/make_ext4fs_main.c |   10 ++++++++--
+ system/extras/ext4_utils/make_ext4fs.c      |    6 ++++++
+ system/extras/ext4_utils/make_ext4fs_main.c |   10 ++++++++--
  2 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/extras/ext4_utils/make_ext4fs_main.c
-+++ b/extras/ext4_utils/make_ext4fs_main.c
-@@ -49,13 +49,15 @@ extern struct fs_info info;
+--- a/system/extras/ext4_utils/make_ext4fs_main.c
++++ b/system/extras/ext4_utils/make_ext4fs_main.c
+@@ -48,13 +48,15 @@ struct selabel_handle;
+ extern struct fs_info info;
  
- extern struct selabel_handle* selinux_android_file_context_handle(void);
  
 +extern int preserve_owner;
 +
@@ -27,7 +27,7 @@ See also https://android-review.googlesource.com/#/c/100312/
  	fprintf(stderr, "    <filename> [<directory>]\n");
  }
  
-@@ -81,7 +83,7 @@ int main(int argc, char **argv)
+@@ -80,7 +82,7 @@ int main(int argc, char **argv)
  	struct selinux_opt seopts[] = { { SELABEL_OPT_PATH, "" } };
  #endif
  
@@ -36,7 +36,7 @@ See also https://android-review.googlesource.com/#/c/100312/
  		switch (opt) {
  		case 'l':
  			info.len = parse_num(optarg);
-@@ -144,6 +146,10 @@ int main(int argc, char **argv)
+@@ -143,6 +145,10 @@ int main(int argc, char **argv)
  			}
  #endif
  			break;
@@ -47,8 +47,8 @@ See also https://android-review.googlesource.com/#/c/100312/
  		case 'v':
  			verbose = 1;
  			break;
---- a/extras/ext4_utils/make_ext4fs.c
-+++ b/extras/ext4_utils/make_ext4fs.c
+--- a/system/extras/ext4_utils/make_ext4fs.c
++++ b/system/extras/ext4_utils/make_ext4fs.c
 @@ -67,6 +67,8 @@
  
  #endif

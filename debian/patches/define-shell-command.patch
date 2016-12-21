@@ -3,12 +3,12 @@ Description: we intend to run on Linux system so the shell is always /bin/sh,
 Author: Fathi Boudra <fabo@debian.org>
 
 ---
- core/adb/services.c |    4 ----
+ system/core/adb/services.c |    4 ----
  1 file changed, 4 deletions(-)
 
---- a/core/adb/services.c
-+++ b/core/adb/services.c
-@@ -303,11 +303,7 @@ static int create_subproc_raw(const char
+--- a/system/core/adb/services.c
++++ b/system/core/adb/services.c
+@@ -299,11 +299,7 @@ static int create_subproc_raw(const char
  }
  #endif  /* !ABD_HOST */
  

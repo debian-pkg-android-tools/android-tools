@@ -2,13 +2,13 @@ Description: fix the implicit conversion warnings
 Author: Fathi Boudra <fabo@debian.org>
 
 ---
- core/adb/adb.c                |    1 +
- core/fs_mgr/fs_mgr_fstab.c    |    2 +-
- core/include/cutils/sockets.h |    2 +-
+ system/core/adb/adb.c                |    1 +
+ system/core/fs_mgr/fs_mgr_fstab.c    |    2 +-
+ system/core/include/cutils/sockets.h |    2 +-
  3 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/core/fs_mgr/fs_mgr_fstab.c
-+++ b/core/fs_mgr/fs_mgr_fstab.c
+--- a/system/core/fs_mgr/fs_mgr_fstab.c
++++ b/system/core/fs_mgr/fs_mgr_fstab.c
 @@ -17,7 +17,7 @@
  #include <ctype.h>
  #include <stdio.h>
@@ -18,8 +18,8 @@ Author: Fathi Boudra <fabo@debian.org>
  #include <sys/mount.h>
  
  #include "fs_mgr_priv.h"
---- a/core/include/cutils/sockets.h
-+++ b/core/include/cutils/sockets.h
+--- a/system/core/include/cutils/sockets.h
++++ b/system/core/include/cutils/sockets.h
 @@ -19,7 +19,7 @@
  
  #include <errno.h>
@@ -29,8 +29,8 @@ Author: Fathi Boudra <fabo@debian.org>
  #include <stdbool.h>
  
  #ifdef HAVE_WINSOCK
---- a/core/adb/adb.c
-+++ b/core/adb/adb.c
+--- a/system/core/adb/adb.c
++++ b/system/core/adb/adb.c
 @@ -41,6 +41,7 @@
  #include <sys/prctl.h>
  #include <getopt.h>

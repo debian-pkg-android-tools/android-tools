@@ -1,7 +1,11 @@
 ## Description: Let adb detect devices from BQ.
 ## Origin/Author: Jani Monoses <jani.monoses@canonical.com>
---- a/core/adb/usb_vendors.c
-+++ b/core/adb/usb_vendors.c
+---
+# system/core/adb/usb_vendors.c |    3 +++
+# 1 file changed, 3 insertions(+)
+#
+--- a/system/core/adb/usb_vendors.c
++++ b/system/core/adb/usb_vendors.c
 @@ -51,6 +51,8 @@
  #define VENDOR_ID_ARCHOS        0x0E79
  // Asus's USB Vendor ID
@@ -11,7 +15,7 @@
  // BYD's USB Vendor ID
  #define VENDOR_ID_BYD           0x1D91
  // Compal's USB Vendor ID
-@@ -206,6 +208,7 @@
+@@ -206,6 +208,7 @@ int builtInVendorIds[] = {
      VENDOR_ID_ANYDATA,
      VENDOR_ID_ARCHOS,
      VENDOR_ID_ASUS,

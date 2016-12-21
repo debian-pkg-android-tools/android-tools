@@ -1,9 +1,9 @@
 ---
- extras/ext4_utils/make_ext4fs_main.c |    1 +
+ system/extras/ext4_utils/make_ext4fs_main.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/extras/ext4_utils/make_ext4fs_main.c
-+++ b/extras/ext4_utils/make_ext4fs_main.c
+--- a/system/extras/ext4_utils/make_ext4fs_main.c
++++ b/system/extras/ext4_utils/make_ext4fs_main.c
 @@ -47,6 +47,7 @@ struct selabel_handle;
  
  extern struct fs_info info;

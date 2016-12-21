@@ -1,6 +1,10 @@
---- a/extras/ext4_utils/make_ext4fs_main.c
-+++ b/extras/ext4_utils/make_ext4fs_main.c
-@@ -184,8 +184,11 @@
+---
+ system/extras/ext4_utils/make_ext4fs_main.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+--- a/system/extras/ext4_utils/make_ext4fs_main.c
++++ b/system/extras/ext4_utils/make_ext4fs_main.c
+@@ -184,8 +184,11 @@ int main(int argc, char **argv)
  		}
  		fs_config_func = canned_fs_config;
  	} else if (mountpoint) {

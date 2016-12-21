@@ -1,9 +1,15 @@
 Subject: adb: Use local sockets where appropriate
 Author: Hilko Bengen <bengen@debian.org>
 
---- a/core/adb/adb.c
-+++ b/core/adb/adb.c
-@@ -1230,7 +1230,11 @@
+---
+ system/core/adb/adb.c             |    6 +++++-
+ system/core/adb/adb_client.c      |    5 +++--
+ system/core/adb/transport_local.c |    3 ++-
+ 3 files changed, 10 insertions(+), 4 deletions(-)
+
+--- a/system/core/adb/adb.c
++++ b/system/core/adb/adb.c
+@@ -1230,7 +1230,11 @@ int launch_server(int server_port)
   */
  void build_local_name(char* target_str, size_t target_size, int server_port)
  {
@@ -16,9 +22,9 @@ Author: Hilko Bengen <bengen@debian.org>
  }
  
  #if !ADB_HOST
---- a/core/adb/adb_client.c
-+++ b/core/adb/adb_client.c
-@@ -185,12 +185,12 @@
+--- a/system/core/adb/adb_client.c
++++ b/system/core/adb/adb_client.c
+@@ -185,12 +185,12 @@ int _adb_connect(const char *service)
          strcpy(__adb_error, "service name too long");
          return -1;
      }
@@ -33,7 +39,7 @@ Author: Hilko Bengen <bengen@debian.org>
  
      if(fd < 0) {
          strcpy(__adb_error, "cannot connect to daemon");
-@@ -201,6 +201,7 @@
+@@ -201,6 +201,7 @@ int _adb_connect(const char *service)
          return -1;
      }
  
@@ -41,9 +47,9 @@ Author: Hilko Bengen <bengen@debian.org>
      if(writex(fd, tmp, 4) || writex(fd, service, len)) {
          strcpy(__adb_error, "write failure during connection");
          adb_close(fd);
---- a/core/adb/transport_local.c
-+++ b/core/adb/transport_local.c
-@@ -121,7 +121,8 @@
+--- a/system/core/adb/transport_local.c
++++ b/system/core/adb/transport_local.c
+@@ -121,7 +121,8 @@ int local_connect_arbitrary_ports(int co
      }
  #endif
      if (fd < 0) {

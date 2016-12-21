@@ -2,13 +2,13 @@ Subject: drop useless includes of Android SELINUX extensions; avoids having to c
 Author: Sergio Schvezov <sergio.schvezov@canonical.com>
 
 ---
- core/adb/file_sync_service.c         |    3 ---
- extras/ext4_utils/make_ext4fs.c      |    1 -
- extras/ext4_utils/make_ext4fs_main.c |    1 -
+ system/core/adb/file_sync_service.c         |    3 ---
+ system/extras/ext4_utils/make_ext4fs.c      |    1 -
+ system/extras/ext4_utils/make_ext4fs_main.c |    1 -
  3 files changed, 5 deletions(-)
 
---- a/extras/ext4_utils/make_ext4fs.c
-+++ b/extras/ext4_utils/make_ext4fs.c
+--- a/system/extras/ext4_utils/make_ext4fs.c
++++ b/system/extras/ext4_utils/make_ext4fs.c
 @@ -62,7 +62,6 @@
  
  #include <selinux/selinux.h>
@@ -17,8 +17,8 @@ Author: Sergio Schvezov <sergio.schvezov@canonical.com>
  
  #define O_BINARY 0
  
---- a/extras/ext4_utils/make_ext4fs_main.c
-+++ b/extras/ext4_utils/make_ext4fs_main.c
+--- a/system/extras/ext4_utils/make_ext4fs_main.c
++++ b/system/extras/ext4_utils/make_ext4fs_main.c
 @@ -32,7 +32,6 @@
  #ifndef USE_MINGW
  #include <selinux/selinux.h>
@@ -27,8 +27,8 @@ Author: Sergio Schvezov <sergio.schvezov@canonical.com>
  #else
  struct selabel_handle;
  #endif
---- a/core/adb/file_sync_service.c
-+++ b/core/adb/file_sync_service.c
+--- a/system/core/adb/file_sync_service.c
++++ b/system/core/adb/file_sync_service.c
 @@ -26,7 +26,6 @@
  
  #include <errno.h>
