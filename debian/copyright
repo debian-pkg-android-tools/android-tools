@@ -51,11 +51,11 @@ License: MIT
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
 
-Files: core/fastboot/*
-       core/include/cutils/atomic-arm64.h
-       core/include/cutils/atomic-x86_64.h
-       core/include/utils/LinearAllocator.h
-       extras/f2fs_utils/f2fs_ioutils.c
+Files: system/core/fastboot/*
+       system/core/include/cutils/atomic-arm64.h
+       system/core/include/cutils/atomic-x86_64.h
+       system/core/include/utils/LinearAllocator.h
+       system/extras/f2fs_utils/f2fs_ioutils.c
 Copyright: 2008, The Android Open Source Project
            2007, Google Inc.
 License: BSD-2-clause
@@ -85,7 +85,7 @@ License: BSD-2-clause
  OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  SUCH DAMAGE.
 
-Files: core/include/mincrypt/*
+Files: system/core/include/mincrypt/*
 Copyright: 2008, The Android Open Source Project
 License: BSD-3-clause
  Redistribution and use in source and binary forms, with or without
@@ -110,8 +110,8 @@ License: BSD-3-clause
  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Files: extras/ext4_utils/sha1.c
-       extras/ext4_utils/sha1.h
+Files: system/extras/ext4_utils/sha1.c
+       system/extras/ext4_utils/sha1.h
 Copyright: 1997 Steve Reid <steve@edmweb.com>
 License: none-sha1
  100% Public Domain
@@ -119,15 +119,15 @@ Comment:
  When copyright holders state "public domain", they generally mean to
  grant all rights to the maximum extent allowed by law.
 
-Files: core/libsparse/sparse_crc32.c
+Files: system/core/libsparse/sparse_crc32.c
 Copyright: 1986 Gary S. Brown
 License: none-crc32
  You may use this program, or code or tables extracted from it, as
  desired without restriction.
 
-Files: extras/ext4_utils/ext4_extents.h
-       extras/ext4_utils/ext4.h
-       extras/ext4_utils/jbd2.h
+Files: system/extras/ext4_utils/ext4_extents.h
+       system/extras/ext4_utils/ext4.h
+       system/extras/ext4_utils/jbd2.h
 Copyright: none
 License: public-domain
  These files contain no copyrightable content; see the Comment field
@@ -139,8 +139,8 @@ Comment:
  structures, and macros generated from the original header, and thus,
  contains no copyrightable information.
 
-Files: core/include/cutils/ashmem.h
-       core/include/utils/ashmem.h
+Files: system/core/include/cutils/ashmem.h
+       system/core/include/utils/ashmem.h
 Copyright: 2006-2012, The Android Open Source Project
 License: Apache-2.0 or GPL-2
 
