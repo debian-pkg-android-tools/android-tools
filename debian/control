@@ -3,7 +3,6 @@ Section: devel
 Priority: extra
 Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
 Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.org>,
-           Hans-Christoph Steiner <hans@eds.org>,
            Loïc Minier <lool@debian.org>,
            Ximin Luo <infinity0@debian.org>,
            Fathi Boudra <fabo@debian.org>
